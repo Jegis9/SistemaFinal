@@ -1,0 +1,72 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center text-success">Usuarios con CV's</h1>
+
+      {% if formulario.errors %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> {{ formulario.errors }}
+      </div>
+      {% endif %} {% if messages %} {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %}
+    </div>
+  </div>
+
+  <div
+    class="row mt-4 shadow p-3 mb-5 bg-body-tertiary rounded border border-secondary"
+  >
+    {% if object_list %}
+    <div class="table-responsive">
+      <table
+        id="myTable"
+        class="table table-striped table-bordered border-success"
+      >
+        <thead>
+          <tr>
+            <th class="header-cell">#</th>
+            <th class="header-cell w-5">Nombre de usuario</th>
+            <th class="header-cell w-5 border">1er Nombre</th>
+            <th class="header-cell w-5 border">2do Nombre</th>
+            <th class="header-cell w-5 border">1er Apellido</th>
+            <th class="header-cell w-5 border">2do Apellido</th>
+            <th class="header-cell w-5 border">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in object_list %}
+          <tr>
+            <td class="border border-success">{{ user.id }}</td>
+            <td class="border border-success">{{ user.username }}</td>
+            <td class="border border-success">{{ user.profile.name1 }}</td>
+            <td class="border border-success">{{ user.profile.name2 }}</td>
+            <td class="border border-success">{{ user.profile.lastname1 }}</td>
+            <td class="border border-success">{{ user.profile.lastname2 }}</td>
+            <td class="border border-success">
+              <a
+                href="{% url 'perfil_cv' user.id %}"
+                class="btn btn-warning text-black"
+              >
+                CV
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-center">No hay usuarios internos con CV registrados.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

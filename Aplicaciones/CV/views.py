@@ -41,6 +41,11 @@ from reportlab.platypus import (
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
 
+def prueba2(request):
+    object_list = User.objects.filter(profile__is_internal=True, cv__isnull=False).select_related('profile', 'cv')
+    return render(request, 'prueba2.html', {"object_list": object_list})
+ 
+
 @login_required
 def editar_cv(request):
     cv_instance, created = CV.objects.get_or_create(user=request.user)
@@ -163,7 +168,7 @@ def generar_cv_reportlab_individual(request):
     Story = []
     
     # Título
-    Story.append(Paragraph(f"Currículum Vitae de {request.user.profile.name1}", styles['TitleStyle']))
+    Story.append(Paragraph(f"Currículum Vitae de {request.user.profile.name1} {request.user.profile.name2} {request.user.profile.lastname1}{request.user.profile.lastname2}", styles['TitleStyle']))
     Story.append(Spacer(1, 12))
     
     # Información Personal

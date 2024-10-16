@@ -21,6 +21,8 @@ urlpatterns = [
 
 
     path('prueba/', views.prueba, name='prueba'),
+    path('prueba2/', views.prueba2, name='prueba2'),
+    
     path('perfil_cv/<int:user_id>/', views.perfil_cv, name='perfil_cv'),
     
 ]

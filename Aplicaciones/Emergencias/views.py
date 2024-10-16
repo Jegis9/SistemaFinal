@@ -15,8 +15,8 @@ from .models import Servicio, Varios, Ambulancia, Incendios
 from django.contrib.staticfiles import finders
 from django.contrib.auth.decorators import login_required
 
-# Obtener la ruta absoluta de los archivos estáticos
-logo_derecha = finders.find('img/images2.png')
+
+
 
 logo_derecha = finders.find('img/images.png')
 @login_required
@@ -120,9 +120,32 @@ def editar_desactivar_varios(request, pk):
     return redirect('varios')
 
 
+from .models import Servicio
+
+def tabla_servicios(request):
+    servicios = Servicio.objects.filter(activo=True).values(
+        'piloto',
+        'unidad',
+        'salida_hora',
+        'entrada_hora',
+        'direccion',
+        'servicio',
+        'observaciones'
+    )
+    return render(request, 'unificado.html', {'servicios': servicios})
 
 
-
+def vista_kilometraje(request):
+    servicios = Servicio.objects.filter(activo=True).values(
+        'unidad',
+        'salida_hora',
+        'entrada_hora',
+        'km_recorridos',
+        
+    )
+    # Para calcular 'hrs', es mejor obtener los objetos completos
+    servicios = Servicio.objects.filter(activo=True)
+    return render(request, 'vista_kilometraje.html', {'servicios': servicios})
 
 
 

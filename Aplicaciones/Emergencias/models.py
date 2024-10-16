@@ -23,7 +23,7 @@ class Servicio(models.Model):
     km_salida = models.DecimalField(max_digits=10, decimal_places=2)
     km_recorridos = models.FloatField()
     servicio = models.CharField(max_length=50, choices=SERVICIO_CHOICES)  # Añadido
-    fecha_hora = models.DateTimeField()  # Añadido
+    fecha_hora = models.DateTimeField(db_index=True)  # Añadido
     activo = models.BooleanField(default=True)  # Campo para desactivación lógica
     def __str__(self):
         return f"{self.servicio} - {self.fecha_hora}"
@@ -61,7 +61,8 @@ class Ambulancia(models.Model):
         max_length=10,
         choices=EMERGENCY_CATEGORIES,
         blank=True,
-        help_text="Seleccione el tipo de emergencia"
+        help_text="Seleccione el tipo de emergencia",
+        db_index=True
     )
     nombre_paciente = models.CharField(max_length=100)
     direccion_paciente = models.CharField(max_length=255)
