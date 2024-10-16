@@ -1,0 +1,241 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="row justify-content-center mt-4">
+  <h1 class="text-center">Servicios</h1>
+  <div class="col-md-8">
+    <div class="form-container">
+      <h1 class="text-center">Agregar servicios</h1>
+      <form method="POST" class="contact-form form-validate">
+        {% if messages %} {% for message in messages %}
+        <div
+          class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="direccion" class="form-label">Dirección:</label>
+              <div class="form-control">{{ form.direccion }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="kmEntrada" class="form-label">KM Entrada:</label>
+              <div class="form-control">{{ form.kmEntrada }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="kmSalida" class="form-label">KM Salida:</label>
+              <div class="form-control">{{ form.kmSalida }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="jefeServicio" class="form-label"
+                >Jefe de Servicio:</label
+              >
+              <div class="form-control">{{ form.jefeServicio }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="telefonista" class="form-label">Telefonista:</label>
+              <div class="form-control">{{ form.telefonista }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="bomberoReporta" class="form-label"
+                >Bombero Reporta:</label
+              >
+              <div class="form-control">{{ form.bomberoReporta }}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="turno" class="form-label">Turno:</label>
+              <div class="form-control">{{ form.turno }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="fecha_hora" class="form-label">Fecha y Hora:</label>
+              <div class="form-control">{{ form.fecha_hora }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="salida_hora" class="form-label">Salida y Hora:</label>
+              <div class="form-control">{{ form.salida_hora }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="entrada_hora" class="form-label"
+                >Entrada y Hora:</label
+              >
+              <div class="form-control">{{ form.entrada_hora }}</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label d-block">Servicio:</label>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="Varios"
+                  name="servicio"
+                  value="Varios"
+                />
+                <label class="form-check-label" for="Varios">Varios</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="Ambulancia"
+                  name="servicio"
+                  value="Ambulancia"
+                />
+                <label class="form-check-label" for="Ambulancia"
+                  >Ambulancia</label
+                >
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="Incendios"
+                  name="servicio"
+                  value="Incendios"
+                />
+                <label class="form-check-label" for="Incendios"
+                  >Incendios</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="observaciones" class="form-label">Observaciones:</label>
+          <div class="form-control">{{ form.observaciones }}</div>
+        </div>
+
+        <!-- Campos específicos para "Varios" -->
+        <div id="campos-varios" class="service-fields" style="display: none">
+          <h3 class="h4 mb-3">Campos para Servicios Varios</h3>
+          <div class="mb-3">
+            <label for="tipo_servicio_varios" class="form-label"
+              >Tipo de Servicio:</label
+            >
+            <div class="form-control">{{ form.tipo_servicio_varios }}</div>
+          </div>
+          <div class="mb-3">
+            <label for="autorizado_por" class="form-label"
+              >Autorizado Por:</label
+            >
+            <div class="form-control">{{ form.autorizado_por }}</div>
+          </div>
+        </div>
+
+        <!-- Campos específicos para "Ambulancia" -->
+        <div
+          id="campos-ambulancia"
+          class="service-fields"
+          style="display: none"
+        >
+          <h3 class="h4 mb-3">Campos para Ambulancia</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="direccion_traslado" class="form-label"
+                  >Dirección de Traslado:</label
+                >
+                <div class="form-control">{{ form.direccion_traslado }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="nombre_paciente" class="form-label"
+                  >Nombre del Paciente:</label
+                >
+                <div class="form-control">{{ form.nombre_paciente }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="direccion_paciente" class="form-label"
+                  >Dirección del Paciente:</label
+                >
+                <div class="form-control">{{ form.direccion_paciente }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="edad" class="form-label">Edad:</label>
+                <div class="form-control">{{ form.edad }}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="sexo" class="form-label">Sexo:</label>
+                <div class="form-control">{{ form.sexo }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="traslado_A" class="form-label">Traslado A:</label>
+                <div class="form-control">{{ form.traslado_A }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="forma_aviso" class="form-label"
+                  >Forma de Aviso:</label
+                >
+                <div class="form-control">{{ form.forma_aviso }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campos específicos para "Incendios" -->
+        <div id="campos-incendios" class="service-fields" style="display: none">
+          <h3 class="h4 mb-3">Campos para Incendios</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="servicio_incendio_inmueble" class="form-label"
+                  >Servicio de Incendio Inmueble:</label
+                >
+                <div class="form-control">
+                  {{ form.servicio_incendio_inmueble }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="valor" class="form-label">Valor:</label>
+                <div class="form-control">{{ form.valor }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="perdida" class="form-label">Pérdida:</label>
+                <div class="form-control">{{ form.perdida }}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="proporcion" class="form-label">Proporción:</label>
+                <div class="form-control">{{ form.proporcion }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="clase_fuego" class="form-label"
+                  >Clase de Fuego:</label
+                >
+                <div class="form-control">{{ form.clase_fuego }}</div>
+              </div>
+              <div class="mb-3">
+                <label for="hora_efectiva" class="form-label"
+                  >Hora Efectiva:</label
+                >
+                <div class="form-control">{{ form.hora_efectiva }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <input
+            class="btn btn-success w-100"
+            type="submit"
+            value="Registrar"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

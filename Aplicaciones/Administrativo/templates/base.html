@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'bootstrap/css/bootstrap.min.css' %}"
+    />
+
+    <!-- Data tables CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'DataTables/datatables.min.css' %}"
+    />
+
+    <!-- Styles CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+    <!-- <style>
+      button {
+        padding: 0.25rem 1rem !important;
+        border-radius: 0.5rem !important;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+      }
+      .dt-input {
+        justify-content: flex-end;
+      }
+      /* Estilo específico para el botón "Copy" */
+      .buttons-copy {
+        background: #011936 !important;
+        color: white !important;
+      }
+
+      /* Estilo específico para el botón "Excel" */
+      .buttons-excel {
+        background: #06a77d !important;
+        color: white !important;
+      }
+
+      /* Estilo específico para el botón "PDF" */
+      .buttons-pdf {
+        background: #dd403a !important;
+        color: white !important;
+      }
+
+      /* Estilo específico para el botón "Print" */
+      .buttons-print {
+        background: #2081c3 !important;
+        color: white !important;
+      }
+    </style> -->
+  </head>
+  <body>
+    <header>
+      <div class="container-fluid overflow-hidden">
+        <div class="row vh-100 overflow-auto">
+          <div
+            id="slideBar"
+            class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 d-flex sticky-top"
+          >
+            <div
+              class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white"
+            >
+              <a
+                href="/"
+                class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none"
+              >
+                <span class="fs-5"
+                  >B<span class="d-none d-sm-inline">omberos Municipales </span
+                  ><br />
+                  {{ user.username | upper }}
+                </span>
+              </a>
+              <ul
+                class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start"
+                id="menu"
+              >
+                <li class="nav-item">
+                  <a href="/estadisticas" class="nav-link px-sm-0 px-2">
+                    <i class="fs-5 bi-house"></i
+                    ><span class="ms-1 d-none d-sm-inline">Estadisticas</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#submenu1"
+                    data-bs-toggle="collapse"
+                    class="nav-link px-sm-0 px-2"
+                    ><i class="bi bi-bell-fill"></i
+                    ><span class="ms-1 d-none d-sm-inline"
+                      ><link
+                        rel="stylesheet"
+                        href="/reportes"
+                      />Emergencias</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'home' %}" class="nav-link px-sm-0 px-2">
+                    <i class="bi bi-calendar-plus-fill"></i
+                    ><span class="ms-1 d-none d-sm-inline">Insumos</span></a
+                  >
+                </li>
+                <li class="dropdown">
+                  <a
+                    href="#"
+                    class="nav-link dropdown-toggle px-sm-0 px-1"
+                    id="dropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="bi bi-clipboard-minus"></i
+                    ><span class="ms-1 d-none d-sm-inline">Servicios</span>
+                  </a>
+                  <ul
+                    class="dropdown-menu dropdown-menu text-small shadow"
+                    aria-labelledby="dropdown"
+                  >
+                    <li>
+                      <a class="dropdown-item" href="/servicios_varios"
+                        >Varios</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/servicios_ambulancia"
+                        >Ambulancia</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/incendios_estructurales"
+                        >Incendios Estructurales</a
+                      >
+                    </li>
+                    <li>
+                      <hr class="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/control_vehiculos"
+                        >Control de vehiculos</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="/vehiculos" class="nav-link px-sm-0 px-2">
+                    <i class="bi bi-truck"></i
+                    ><span class="ms-1 d-none d-sm-inline">Vehiculos</span></a
+                  >
+                </li>
+                <li>
+                  <a href="/epp" class="nav-link px-sm-0 px-2">
+                    <i class="fs-5 bi-people"></i
+                    ><span class="ms-1 d-none d-sm-inline">EPP</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/herramientas" class="nav-link px-sm-0 px-2">
+                    <i class="bi bi-gear"></i
+                    ><span class="ms-1 d-none d-sm-inline">Herramientas</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/personalesEstacion" class="nav-link px-sm-0 px-2">
+                    <i class="fs-5 bi-people"></i
+                    ><span class="ms-1 d-none d-sm-inline">Personal</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'usuarios'%}" class="nav-link px-sm-0 px-2">
+                    <i class="fs-5 bi-people"></i
+                    ><span class="ms-1 d-none d-sm-inline">Usuarios</span>
+                  </a>
+                </li>
+              </ul>
+              <div
+                class="dropdown py-sm-4 mt-sm-auto ms-auto ms-sm-0 flex-shrink-1"
+              >
+                <a
+                  href="#"
+                  class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                  id="dropdownUser1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="https://github.com/mdo.png"
+                    alt="hugenerd"
+                    width="28"
+                    height="28"
+                    class="rounded-circle"
+                  />
+                  <span class="d-none d-sm-inline mx-1">Admin</span>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu text-small shadow"
+                  aria-labelledby="dropdownUser1"
+                >
+                  <li>
+                    <a class="dropdown-item" href="/logout">Cerrar sesion</a>
+                  </li>
+                  <li><a class="dropdown-item" href="/logout">Perfil</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col d-flex flex-column h-sm-100"
+            style="background-color: #f1f5f8"
+          >
+            <main class="row overflow-auto">
+              <div class="col pt-4">
+                <hr />
+                {% block body %} {% endblock %}
+              </div>
+            </main>
+            <footer class="row bg-light py-4 mt-auto">
+              <div class="col text-center">
+                © 2024 Bomberos Municipales de Totonicapán
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'DataTables/datatables.min.js' %}"></script>
+    <script src="{% static 'js/insumos.js' %}"></script>
+  </body>
+</html>

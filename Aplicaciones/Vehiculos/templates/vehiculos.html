@@ -1,0 +1,191 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="row justify-content-center mt-4">
+  <meta name="csrf-token" content="{{ csrf_token }}" />
+
+  <script src="{% static 'js/validaciones.js' %}"></script>
+  <!-- Columna para el formulario -->
+  <h1 class="text-center">Vehiculos</h1>
+  <div class="col-md-6 col-lg-5">
+    <div class="form-container">
+      <h1 class="text-center">Agregar vehiculos</h1>
+      <form method="POST" class="contact-form form-validate">
+        {% if formulario.errors %}
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ formulario.errors }}
+        </div>
+        {% endif %} {% if messages %} {% for message in messages %}
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% csrf_token %}
+        <div class="row">
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="placa">Placa:</label>
+              <input
+                type="text"
+                name="placa"
+                id="placa"
+                class="form-control"
+                placeholder="Escribe la placa del vehiculo"
+              />
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="tipo">Tipo vehiculo: </label>
+              <input
+                type="text"
+                name="tipo"
+                id="tipo"
+                class="form-control"
+                placeholder="Escribe el tipo de vehiculo"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <input
+            class="btn btn-success w-100"
+            type="submit"
+            value="Registrar"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Columna para la tabla -->
+  <div class="col-md-6 col-lg-7">
+    <div
+      class="table-container mt-4 shadow p-3 mb-5 bg-body-tertiary rounded border border-secondary"
+    >
+      <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Placa</th>
+              <th>Tipo</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vehiculo in vehiculos_list %}
+            <tr>
+              <td>{{ vehiculo.id }}</td>
+              <td>{{ vehiculo.placas }}</td>
+              <td>{{ vehiculo.tipo_vehiculo }}</td>
+              <td>
+                <button
+                  class="btn btn-warning mb-2 mb-md-0"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#estadoEPP{{ vehiculo.id }}"
+                >
+                  <i class="bi bi-recycle"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="eliminar-btn btn btn-danger mb-2 mb-md-0"
+                  data-url="{% url 'eliminar_vehiculo' vehiculo.id %}"
+                >
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+                <a
+                  href="{% url 'editar_vehiculo' vehiculo.id %}"
+                  class="btn btn-primary btn-sm"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+              </td>
+            </tr>
+
+            <!-- Modal para cada asignación -->
+            <div
+              class="modal fade border"
+              id="estadoEPP{{ vehiculo.id }}"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-warning">
+                    <h1
+                      class="modal-title fs-5 text-center text-black w-100"
+                      id="exampleModalLabel"
+                    >
+                      Reportar estado
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close bg-white"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+
+                  <div class="modal-body">
+                    <div class="container px-5 my-5">
+                      <form
+                        action="{% url 'mantenimientoVehiculos' vehiculo.id %}"
+                        method="POST"
+                      >
+                        {% csrf_token %}
+                        <label for="descripcion"
+                          >Descripción del reporte:</label
+                        >
+                        <div class="form-floating mb-3">
+                          <textarea
+                            name="descripcion"
+                            id="descripcion"
+                            rows="4"
+                            cols="50"
+                            class="form-control"
+                          ></textarea>
+                        </div>
+
+                        <input
+                          type="radio"
+                          id="estado"
+                          name="estado"
+                          value="malo"
+                          checked
+                          readonly
+                          hidden
+                        />
+                        <div class="d-grid">
+                          <button class="btn btn-warning btn-lg" type="submit">
+                            Guardar
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

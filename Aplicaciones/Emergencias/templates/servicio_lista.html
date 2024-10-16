@@ -1,0 +1,33 @@
+<!-- your_app/templates/your_app/servicio_list.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lista de Servicios</title>
+  </head>
+  <body>
+    <h1>Lista de Servicios</h1>
+    <ul>
+      {% for servicio in servicios %}
+      <li>
+        <strong>Servicio:</strong> {{ servicio.servicio }}<br />
+        <strong>Estación:</strong> {{ servicio.estacion }}<br />
+        <strong>Turno:</strong> {{ servicio.turno }}<br />
+        <strong>Dirección:</strong> {{ servicio.direccion }}<br />
+        <!-- Otros campos del Servicio -->
+      </li>
+      {% empty %}
+      <li>No hay servicios registrados.</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Filtrar por Tipo de Servicio</h2>
+    <ul>
+      <li><a href="{% url 'varios' %}">Varios</a></li>
+      <li><a href="#">Ambulancia</a></li>
+      <li><a href="#">Incendios</a></li>
+    </ul>
+
+    <a href="#">Crear Nuevo Servicio</a>
+  </body>
+</html>

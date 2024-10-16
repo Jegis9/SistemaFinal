@@ -1,0 +1,182 @@
+{% extends 'baseG.html' %} {% load static %} {% block body %}
+
+<div class="row justify-content-center">
+  <div class="row justify-content-center" id="page-content">
+    <div class="padding">
+      <div class="col-md-8 col-lg-6 form-container w-100">
+        <h1 class="text-center">Mi perfil</h1>
+        <div class="card user-card-full w-100">
+          <h1 class="text-center encabezado text-white">
+            Bienvenido {{user.username |upper}}
+          </h1>
+          <div class="row m-l-0 m-r-0">
+            <div class="col-sm-4 bg-c-lite-green user-profile">
+              <div class="card-block text-center text-white">
+                <div class="m-b-25">
+                  {% if user.profile.image %}
+                  <img
+                    src="{{ user.profile.image.url }}"
+                    class="img-radius rounded-circle"
+                    alt="User-Profile-Image"
+                  />
+                  {% else %}
+
+                  <img
+                    class="img-radius rounded-circle"
+                    src="#"
+                    alt="Imagen predeterminada"
+                  />
+
+                  {% endif %}
+                </div>
+                <h6 class="f-w-600">{{user.username | upper}}</h6>
+
+                <i
+                  class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"
+                ></i>
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                  <div class="form-group">
+                    <!-- Campo de imagen -->
+                    {{ form.image.label_tag }}
+                    <!-- Label del campo -->
+                    {{ form.image }}
+                    <!-- Campo para subir la imagen -->
+
+                    <!-- Mostrar los errores asociados con el campo 'image' -->
+                    {% if form.image.errors %}
+                    <div class="alert alert-danger">
+                      {{ form.image.errors }}
+                    </div>
+                    {% endif %}
+                  </div>
+
+                  <!-- Mostrar errores generales que no estén asociados a un campo específico -->
+                  {% if form.non_field_errors %}
+                  <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                  </div>
+                  {% endif %}
+
+                  <button class="btn btn-warning" type="submit">
+                    Actualizar imagen
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="col-sm-8 bg-light">
+              <div class="card-block">
+                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">
+                  Informacion de usuario
+                </h6>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Nombre de usuario</p>
+                    <h6 class="text-muted f-w-400">
+                      {{ user.username |upper }}
+                    </h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Correo</p>
+                    <h6 class="text-muted f-w-400">{{ user.email }}</h6>
+                  </div>
+                </div>
+                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">
+                  Datos adicionales
+                </h6>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Nombre</p>
+                    <h6 class="text-muted f-w-400">
+                      {{ user.profile.name1 }} {{ user.profile.name2 }}
+                    </h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Apellidos</p>
+                    <h6 class="text-muted f-w-400">
+                      {{ user.profile.lastname1 }} {{ user.profile.lastname2 }}
+                    </h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Cumpleaños</p>
+                    <h6 class="text-muted f-w-400">
+                      {{ user.profile.birthday }}
+                    </h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Telefono</p>
+                    <h6 class="text-muted f-w-400">{{ user.profile.phone }}</h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Municipio</p>
+                    <h6 class="text-muted f-w-400">
+                      {{ user.profile.municipio }}
+                    </h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Direccion</p>
+                    <h6 class="text-muted f-w-400">
+                      {{ user.profile.direccion }}
+                    </h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Genero</p>
+                    <h6 class="text-muted f-w-400">
+                      {{ user.profile.gender }}
+                    </h6>
+                  </div>
+                </div>
+                <ul class="social-link list-unstyled m-t-40 m-b-10">
+                  <li>
+                    <a
+                      href="#!"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="facebook"
+                      data-abc="true"
+                      ><i
+                        class="mdi mdi-facebook feather icon-facebook facebook"
+                        aria-hidden="true"
+                      ></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      href="#!"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="twitter"
+                      data-abc="true"
+                      ><i
+                        class="mdi mdi-twitter feather icon-twitter twitter"
+                        aria-hidden="true"
+                      ></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      href="#!"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title=""
+                      data-original-title="instagram"
+                      data-abc="true"
+                      ><i
+                        class="mdi mdi-instagram feather icon-instagram instagram"
+                        aria-hidden="true"
+                      ></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

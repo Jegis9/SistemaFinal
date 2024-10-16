@@ -1,0 +1,111 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center">Reportes EPP</h1>
+      {% if formulario.errors %}
+
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> {{ formulario.errors }}
+      </div>
+      {% endif %} {% if messages %} {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %}
+    </div>
+  </div>
+
+  <div
+    class="row mt-4 shadow p-3 mb-5 bg-body-tertiary rounded border border-secondary"
+  >
+    {% if estados %}
+    <div class="table-responsive">
+      <table
+        id="myTable"
+        class="table table-striped table-bordered border-success"
+      >
+        <thead>
+          <tr>
+            <th class="header-cell">#</th>
+
+            <th class="header-cell w-5 border">Equipo</th>
+            <th class="header-cell w-5 border">Personal</th>
+            <th class="header-cell w-5 border">Descripcion</th>
+
+            <th class="header-cell w-5 border">opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for estados in estados %}
+          <tr>
+            <td class="border border-success">{{ estados.id }}</td>
+            <td class="border border-success">{{ estados.vehiculo.placas }}</td>
+            <td class="border border-success">
+              {{ estados.vehiculo.tipo_vehiculo }}
+            </td>
+
+            <td class="border border-success">{{estados.descripcion}}</td>
+
+            <td class="border border-success">
+              <div
+                class="d-flex flex-column flex-md-row justify-content-between"
+              >
+                <form
+                  id="myForm"
+                  method="POST"
+                  action="{% url 'marcar_arreglado_vehiculo' estados.id %}"
+                >
+                  {% csrf_token %}
+                  <!-- Cambia el tipo de submit a button -->
+                  <!-- Cambia el id a class en el botón -->
+                  <button
+                    class="btn btn-danger mb-2 mb-md-0 submitBtn"
+                    type="button"
+                  >
+                    <i class="bi bi-check-circle-fill"></i>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% endif %}
+  </div>
+</div>
+<script>
+  // Seleccionar todos los botones con la clase submitBtn
+  document.querySelectorAll(".submitBtn").forEach(function (button) {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const form = this.closest("form"); // Seleccionar el formulario más cercano al botón
+
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Marcar como arreglado no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, marcar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit(); // Enviar el formulario correspondiente
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

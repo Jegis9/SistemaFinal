@@ -1,0 +1,44 @@
+<!-- detalle_insumo.html -->
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="container mt-4">
+  <h2>Detalle de Insumo: {{ insumo.nombre }}</h2>
+  <p>
+    <strong>Stock Inicial:</strong>
+    <span class="badge text-bg-primary">{{ insumo.stock_inicial }}</span>
+  </p>
+  <p>
+    <strong>Stock Actual:</strong>
+    <span class="badge text-bg-warning">{{ insumo.stock_actual }}</span>
+  </p>
+
+  <h3>Movimientos</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Personal</th>
+        <th>Cantidad</th>
+        <th>Tipo de Movimiento</th>
+        <th>Fecha</th>
+        <th>Observación</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for movimiento in movimientos %}
+      <tr>
+        <td>{{ movimiento.id }}</td>
+        <td>{{ movimiento.idPersonal.username }}</td>
+        <td>{{ movimiento.cantidad }}</td>
+        <td>{{ movimiento.tipo_movimiento }}</td>
+        <td>{{ movimiento.fecha }}</td>
+        <td>{{ movimiento.observacion }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'registrar_insumo_nuevo' %}" class="btn btn-primary"
+    >Volver</a
+  >
+</div>
+{% endblock %}

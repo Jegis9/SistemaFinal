@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bomberos municipales de totonicapan</title>
+
+    <!-- Icono -->
+    <link rel="shortcut icon" href="{% static 'img/icon.ico' %}" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'bootstrap/css/bootstrap.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'css/sweetalert2.all.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'css/stylesLanding.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/stylesPublico.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="Icon-var">
+                <img
+                  src="{% static 'img/logo2.avif' %}"
+                  alt=""
+                  width="90px"
+                  height="50px"
+                />
+              </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <button class="btn btn-danger me-2" type="submit">
+              <a class="nav-link" href="{% url 'reportEmergency' %}"
+                >Reportar</a
+              >
+            </button>
+
+            <button class="btn btn-primary me-2" type="submit">
+              <a class="nav-link" href="{% url 'profile' %}">Mi perfil</a>
+            </button>
+            <button class="btn btn-success me-2" type="submit">
+              <a class="nav-link" href="{% url 'logout_sale' %}"
+                >Cerrar sesion</a
+              >
+            </button>
+            {% else %}
+            <button class="btn btn-primary me-2" type="submit">
+              <a class="nav-link" href="{% url 'landingPage' %}">Principal</a>
+            </button>
+
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mt-16 bg-body-tertiary content">
+      {% block content %} {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start bg-light text-muted">
+      <!-- Section: Social media -->
+      <section
+        class="d-flex justify-content-center justify-content-lg-between p-4 border-top border-success bg-white"
+      >
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+          <span>Contactanos en nuestras redes sociales: </span>
+        </div>
+        <!-- Left -->
+
+        <!-- Right -->
+        <div>
+          <a href="" class="me-4 text-reset">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+          <a href="" class="me-4 text-reset">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+        <!-- Right -->
+      </section>
+      <!-- Section: Social media -->
+
+      <!-- Section: Links  -->
+      <section class="">
+        <div class="container text-center text-md-start mt-5">
+          <!-- Grid row -->
+          <div class="row mt-3">
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+              <!-- Content -->
+              <h6 class="text-uppercase fw-bold mb-4">
+                Bomberos municipales de totonicapàn
+              </h6>
+              <p>Cuidando la integridad de la poblacion totonicapense</p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4">Contacto</h6>
+              <p><i class="fas fa-home me-3"></i> Totonicapan zona 2</p>
+              <p>
+                <i class="fas fa-envelope me-3"></i>
+                bomberosmtgmail.com
+              </p>
+              <p><i class="fas fa-phone me-3"></i> 23456544</p>
+            </div>
+            <!-- Grid column -->
+          </div>
+          <!-- Grid row -->
+        </div>
+      </section>
+      <!-- Section: Links  -->
+
+      <!-- Copyright -->
+      <div class="text-center p-4 bg-success text-light">
+        © 4 Copyright:
+        <a class="text-reset fw-bold" href="#"
+          >Bomberos municipales de totonicapan</a
+        >
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+    <!-- Footer -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{% static 'js/maps.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+  </body>
+</html>

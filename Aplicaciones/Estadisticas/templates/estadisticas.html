@@ -1,0 +1,416 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard de Estadísticas</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeo5s0jU2l5rN1u1pDgDkZ2mC3pTSAeUj0Ufyl3k2M02Q4"
+      crossorigin="anonymous"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .card {
+        border-radius: 15px;
+      }
+      .icon-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+      }
+      .text h4 {
+        font-size: 1.5rem;
+        color: #343a40;
+      }
+      .text p {
+        color: #6c757d;
+      }
+      .chart-container {
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grey-bg container-fluid py-4">
+      <section id="minimal-statistics">
+        <!-- Título de la sección -->
+        <div class="row justify-content-center mb-4">
+          <div class="col-12 text-center">
+            <h4 class="text-uppercase">Estadísticas Generales</h4>
+            <p>Información de todo el sistema</p>
+          </div>
+        </div>
+
+        <!-- Filas de tarjetas -->
+        <div class="row justify-content-center g-4">
+          <!-- Emergencias Pendientes -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #dc3545;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-bell-fill" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ emergencias_pendientes }}</h4>
+                  <p class="mb-0">Emergencias pendientes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Emergencias Atendidas -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #102fdf;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-bell-fill" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_emergencias_atendidas }}</h4>
+                  <p class="mb-0">Total de emergencias atendidas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Herramientas Arregladas -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #43dc35;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i
+                    class="bi bi-gear-wide-connected"
+                    style="font-size: 2rem"
+                  ></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ herramientas_arregladas }}</h4>
+                  <p class="mb-0">Herramientas dadas como altas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Herramientas por Arreglar -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #dc3545;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i
+                    class="bi bi-gear-wide-connected"
+                    style="font-size: 2rem"
+                  ></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ herramientas_malas }}</h4>
+                  <p class="mb-0">Herramientas por arreglar</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total de Herramientas -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #102fdf;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i
+                    class="bi bi-gear-wide-connected"
+                    style="font-size: 2rem"
+                  ></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_herramientas }}</h4>
+                  <p class="mb-0">Total de herramientas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total de Insumos Suficientes -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #43dc35;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-bag-plus-fill" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_insumos_alto }}</h4>
+                  <p class="mb-0">Total de insumos suficientes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total de Insumos Medios -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #cab01e;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-bag-plus-fill" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_insumos_medio }}</h4>
+                  <p class="mb-0">Total de insumos medios</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total de Insumos Bajos -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #dc3545;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-bag-plus-fill" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_insumos_bajo }}</h4>
+                  <p class="mb-0">Total insumos bajos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total de Insumos -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #102fdf;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-bag-plus-fill" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_insumos }}</h4>
+                  <p class="mb-0">Total insumos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Usuarios Públicos -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #102fdf;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-person" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ usuarios_externos }}</h4>
+                  <p class="mb-0">Usuarios públicos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Usuarios Internos -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #102fdf;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-person" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ usuarios_internos }}</h4>
+                  <p class="mb-0">Usuarios internos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total CV's -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #102fdf;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i
+                    class="bi bi-file-earmark-check"
+                    style="font-size: 2rem"
+                  ></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_cv }}</h4>
+                  <p class="mb-0">Total CV's</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reportes EPP -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #dc3545;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i
+                    class="bi bi-person-fill-exclamation"
+                    style="font-size: 2rem"
+                  ></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_reportes_epp }}</h4>
+                  <p class="mb-0">Reportes EPP</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total EPP -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #102fdf;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-person-heart" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_epp }}</h4>
+                  <p class="mb-0">Total de EPP</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Vehículos -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex align-items-center">
+                <div
+                  class="icon-box me-3"
+                  style="
+                    background-color: #102fdf;
+                    color: white;
+                    border-radius: 10px;
+                  "
+                >
+                  <i class="bi bi-truck" style="font-size: 2rem"></i>
+                </div>
+                <div class="text">
+                  <h4 class="mb-0">{{ total_vehiculos }}</h4>
+                  <p class="mb-0">Total vehículos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
+
+{% endblock %}

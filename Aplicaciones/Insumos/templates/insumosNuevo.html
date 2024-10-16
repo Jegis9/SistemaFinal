@@ -1,0 +1,212 @@
+<!-- insumo.html -->
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="row justify-content-center mt-4">
+  <meta name="csrf-token" content="{{ csrf_token }}" />
+
+  <script src="{% static 'js/validaciones.js' %}"></script>
+  <!-- Columna para el formulario -->
+  <h1 class="text-center">Insumos</h1>
+  <div class="col-md-6 col-lg-5">
+    <div class="form-container">
+      <h1 class="text-center">Agregar insumos</h1>
+      <form method="POST" class="contact-form form-validate">
+        {% if messages %} {% for message in messages %}
+        <div
+          class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% csrf_token %}
+        <div class="row">
+          <!-- Selección de EPP -->
+          <div class="col-sm-6 mb-3">
+            <!-- Opción para agregar nuevo EPP -->
+            <div class="form-group mt-3">
+              <div class="alert alert-danger" role="alert">
+                <strong>¿No encuentras el insumo?</strong> Agrega uno nuevo:
+              </div>
+              <input
+                type="text"
+                name="nombre"
+                id="nombre"
+                class="form-control"
+                placeholder="Nombre del nuevo insumo"
+                required
+              />
+
+              <input
+                type="number"
+                name="cantidadInicial"
+                id="cantidadInicial"
+                class="form-control"
+                placeholder="Cantidad Inicial"
+                min="1"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <input
+            class="btn btn-success w-100"
+            type="submit"
+            value="Registrar"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Columna para la tabla -->
+  <div class="col-md-6 col-lg-7">
+    <div
+      class="table-container mt-4 shadow p-3 mb-5 bg-body-tertiary rounded border border-secondary"
+    >
+      <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Stock inicial</th>
+              <th>Stock actual</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for insumo in insumos %}
+            <tr>
+              <td>{{ insumo.codigo }}</td>
+              <td>{{ insumo.nombre }}</td>
+              <td>{{ insumo.stock_inicial }}</td>
+              <td class="stock-cell" data-stock="{{ insumo.stock_actual }}">
+                {{ insumo.stock_actual }}
+              </td>
+              <td>
+                <button
+                  class="btn btn-warning mb-2 mb-md-0"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#ajustar_stock{{ insumo.codigo }}"
+                >
+                  <i class="bi bi-recycle"></i>
+                </button>
+
+                <form
+                  method="POST"
+                  action="{% url 'detalle_insumo' insumo.codigo %}"
+                  class="btn mb-2 mb-md-0"
+                >
+                  {% csrf_token %}
+                  <button class="btn btn-secondary mb-2 mb-md-0" type="submit">
+                    <i class="bi bi-clock-history"></i>
+                  </button>
+                </form>
+
+                <button
+                  type="button"
+                  class="eliminar-btn btn btn-danger mb-2 mb-md-0"
+                  data-url="{% url 'eliminar_insumo' insumo.codigo %}"
+                >
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- Modal para cada insumo -->
+            <div
+              class="modal fade border"
+              id="ajustar_stock{{ insumo.codigo }}"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-warning">
+                    <h1
+                      class="modal-title fs-5 text-center text-black w-100"
+                      id="exampleModalLabel"
+                    >
+                      Reportar estado
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close bg-white"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+
+                  <div class="modal-body">
+                    <div class="container px-5 my-5">
+                      <form
+                        action="{% url 'ajustar_stock' insumo.codigo %}"
+                        method="POST"
+                      >
+                        {% csrf_token %}
+                        <div class="mb-3">
+                          <label for="cantidad">Cantidad:</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            name="cantidad"
+                            id="cantidad"
+                            min="1"
+                            required
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="tipo_movimiento"
+                            >Tipo de Movimiento:</label
+                          >
+                          <select
+                            name="tipo_movimiento"
+                            id="tipo_movimiento"
+                            class="form-control"
+                            required
+                          >
+                            <option value="" disabled selected>
+                              Selecciona tipo de movimiento
+                            </option>
+                            <option value="SALIDA">SALIDA</option>
+                            <option value="ENTRADA">ENTRADA</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label for="observacion">Observación:</label>
+                          <input
+                            type="text"
+                            id="observacion"
+                            name="observacion"
+                            class="form-control"
+                            placeholder="Detalles de la observación"
+                            value="malo"
+                          />
+                        </div>
+                        <div class="d-grid">
+                          <button class="btn btn-warning btn-lg" type="submit">
+                            Guardar
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

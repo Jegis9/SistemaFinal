@@ -1,0 +1,96 @@
+{% extends 'basePublico.html' %} {% load static %} {% block content%}
+<div class="container mt-5 mb-5">
+  {% if user.is_authenticated %}
+  <div class="contact__wrapper shadow-lg mt-n9">
+    <div class="row no-gutters">
+      <div
+        class="col-lg-5 contact-info__wrapper bg-danger text-light p-5 order-lg-2"
+      >
+        <h3 class="color--white mb-5">¡Tu reporte puede salvar una vida!</h3>
+        <p>
+          Las emergencias reales requieren atención inmediata. Al reportar una
+          emergencia falsa, estás desviando recursos que podrían ser vitales
+          para alguien en peligro. ¡Por favor, usa los servicios de emergencia
+          con responsabilidad! Cada segundo cuenta, y juntos podemos asegurarnos
+          de que la ayuda llegue a quienes realmente la necesitan.
+        </p>
+      </div>
+
+      <div class="col-lg-7 contact-form__wrapper p-5 order-lg-1">
+        <form
+          method="POST"
+          class="contact-form form-validate"
+          id="emergencyForm"
+          action="/reportarEmergencia/"
+        >
+          {% csrf_token %}
+
+          <h1 class="text-center">Iniciar sesión</h1>
+
+          <div class="alert alert-danger" role="alert">
+            <strong>Advertencia: </strong> Utiliza este reporte solamente si la
+            emergencia es verdadera!
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6 mb-3">
+              <div class="form-group">
+                <label for="descripcion">Descripción de emergencia: </label>
+                <input
+                  type="text"
+                  name="descripcion"
+                  id="descripcion"
+                  class="form-control"
+                  placeholder="Ej. Accidente automovilistico "
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-6 mb-3">
+              <div class="form-group">
+                <input
+                  type="hidden"
+                  name="location"
+                  id="location"
+                  class="form-control"
+                  placeholder="Ubicación detectada automáticamente"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Div donde se mostrará el mapa -->
+          <h1 class="text-center">Ubicacion</h1>
+          {% if messages %} {% for message in messages %}
+          <div
+            class="alert alert-success alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Mensaje: </strong> {{ message }}
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+          {% endfor %} {% endif %}
+
+          <div id="map" style="height: 400px; width: 100%"></div>
+
+          <input
+            class="btn btn-danger"
+            type="submit"
+            value="Reportar emergencia"
+            id="report"
+            name="report"
+          />
+        </form>
+      </div>
+      <!-- End Contact Form Wrapper -->
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}

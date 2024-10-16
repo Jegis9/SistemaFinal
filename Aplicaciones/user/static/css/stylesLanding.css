@@ -1,0 +1,92 @@
+.img-circle {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #d5f9de;
+}
+
+.card,
+.card-text {
+  background-color: #04724d;
+  color: white;
+}
+.img-circle {
+  background-color: #edfcf1;
+}
+.icono-info{
+  font-size: 2rem"
+}
+.containerInfo{
+  background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(3) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M20-5V5m0 30v10m20-30v10M0 15v10'  stroke-linejoin='round' stroke-linecap='round' stroke-width='1' stroke='hsla(88, 52%, 83%, 1)' fill='none'/><path d='M-5 40H5M-5 0H5m30 0h10M35 40h10M15 20h10'  stroke-linejoin='round' stroke-linecap='round' stroke-width='1' stroke='hsla(122, 25%, 77%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>")
+}
+
+
+
+.gradient-brand-color {
+  background-image: -webkit-linear-gradient(0deg, #4caf50 0%, #81c784 100%);
+  background-image: -ms-linear-gradient(0deg, #4caf50 0%, #81c784 100%);
+  background-image: linear-gradient(0deg, #4caf50 0%, #81c784 100%);
+  color: #fff; /* Mantiene el texto blanco */
+  
+}
+
+
+
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1;
+}
+.contact-info__wrapper {
+  overflow: hidden;
+  border-radius: 0.625rem 0.625rem 0 0;
+}
+footer {
+  background-color: lightgrey;
+  padding: 10px;
+  text-align: center;
+}
+@media (min-width: 1024px) {
+  .contact-info__wrapper {
+    border-radius: 0 0.625rem 0.625rem 0;
+    padding: 5rem !important;
+  }
+}
+.contact-info__list span.position-absolute {
+  left: 0;
+}
+.z-index-101 {
+  z-index: 101;
+}
+.list-style--none {
+  list-style: none;
+}
+.contact__wrapper {
+  background-color: #fff;
+  border-radius: 0 0 0.625rem 0.625rem;
+}
+
+@media (min-width: 1024px) {
+  .contact__wrapper {
+    border-radius: 0.625rem 0 0.625rem 0.625rem;
+  }
+}
+@media (min-width: 1024px) {
+  .contact-form__wrapper {
+    padding: 5rem !important;
+  }
+}
+.shadow-lg,
+.shadow-lg--on-hover:hover {
+  box-shadow: 0 1rem 3rem rgba(132, 138, 163, 0.1) !important;
+}
+
+

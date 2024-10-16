@@ -1,0 +1,93 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+
+<div class="row justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 form-container">
+      <a href="{% url 'herramientas' %}" class="btn btn-primary">Volver</a>
+      {% if formulario.errors %}
+
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> {{ formulario.errors }}
+      </div>
+      {% endif %} {% if messages %} {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %}
+      <div class="table-responsive">
+        <table id="table-epp" class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for her in her %}
+            <tr>
+              <td>{{ her.codigo }}</td>
+              <td>{{ her.nombre }}</td>
+              <td>
+                <!-- Botón para Editar -->
+                <a
+                  href="{% url 'editar_herramienta' her.codigo %}"
+                  class="btn btn-primary btn-sm"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+
+                <!-- Formulario para Eliminar -->
+                <!-- Formulario para Eliminar cada herramienta -->
+                <form
+                  action="{% url 'eliminar_herramientas' her.codigo %}"
+                  method="post"
+                  style="display: inline"
+                  id="deleteForm-{{ her.codigo }}"
+                >
+                  {% csrf_token %}
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    onclick="confirmDelete('{{ her.codigo }}')"
+                  >
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function confirmDelete(codigo_her) {
+    // Usamos SweetAlert para mostrar una alerta personalizada
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminarlo",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, enviamos el formulario específico por su ID
+        document.getElementById(`deleteForm-${codigo_her}`).submit();
+      }
+    });
+  }
+</script>
+{% endblock %}

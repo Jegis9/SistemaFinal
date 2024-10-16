@@ -1,0 +1,94 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center">Emergencias reportadas</h1>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <!-- Columna izquierda con el contenedor para el mapa -->
+    <div class="col-12 col-md-4 d-flex mb-5">
+      <div class="bg-light shadow p-3 rounded" id="holaDiv">
+        <h2 class="text-center border-bottom border-success">
+          Datos de emergencia
+        </h2>
+        <!-- Aquí se mostrará el mapa -->
+        <div id="map" style="height: 300px"></div>
+
+        <!-- Campos que serán rellenados dinámicamente -->
+        <label for="coordenadas">Coordenadas: </label>
+        <input type="text" class="form-control" id="coordenadas" readonly />
+        <br />
+        <label for="descripcion">Descripcion: </label>
+        <input type="text" class="form-control" id="descripcion" readonly />
+
+        <br />
+        <label for="usuario">Usuario: </label>
+        <input type="text" class="form-control" id="usuario" readonly />
+        <br />
+        <label for="correo">Correo: </label>
+        <input type="text" class="form-control" id="correo" readonly />
+      </div>
+    </div>
+
+    <!-- Columna derecha con la tabla -->
+    <div class="col-12 col-md-8">
+      <div
+        class="table-responsive shadow p-3 mb-5 bg-body-tertiary rounded border border-secondary"
+      >
+        <table
+          id="myTable"
+          class="table table-striped table-bordered border-success"
+        >
+          <thead>
+            <tr>
+              <th class="header-cell w-25">#</th>
+
+              <th class="header-cell w-25">Hora y fecha</th>
+              <th class="header-cell w-25 border">Opcion</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for emergencia in emergencia %} {% if not emergencia.atendido %}
+            <tr>
+              <td class="border border-success">{{ emergencia.codigo }}</td>
+              <td class="border border-success">{{ emergencia.reportado}}</td>
+              <td class="border border-success">
+                <div
+                  class="d-flex flex-column flex-md-row justify-content-between"
+                >
+                  <button
+                    class="btn btn-success mb-2 mb-md-0 ver-btn"
+                    type="button"
+                    data-coordenadas="{{ emergencia.ubicacion }}"
+                    data-descripcion="{{ emergencia.descripcion }}"
+                    data-usuario="{{ emergencia.user }}"
+                    data-usuario-correo="{{ emergencia.user.email}}"
+                  >
+                    <i class="bi bi-eye-fill"></i>
+                  </button>
+                  <!-- aqui envio la emergenciaa marcar segun el codigo -->
+                  <form
+                    method="POST"
+                    id="atendido"
+                    action="{% url 'marcar_como_atendido' emergencia.codigo %}"
+                  >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" id="cerrar">
+                      <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% endif %} {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

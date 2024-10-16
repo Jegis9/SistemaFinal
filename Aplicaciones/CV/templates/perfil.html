@@ -1,0 +1,95 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+
+<div class="row justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 form-container">
+      <h1 class="text-center">Perfil de {{ user.username }}</h1>
+
+      <h2>Información Personal</h2>
+      <p><strong>Cargo:</strong> {{ cv.cargo }}</p>
+      <p><strong>Sobre mí:</strong> {{ cv.sobre_mi }}</p>
+      <p><strong>Tipo de Sangre:</strong> {{ cv.tipo_sangre }}</p>
+      <p><strong>Contacto (Email):</strong> {{cv.contacto_email}}</p>
+      <p>
+        <strong>Contacto (Teléfono de Emergencia):</strong>
+        {{cv.contacto_telefono_emergencia}}
+      </p>
+      <p><strong>Habilidades:</strong> {{ cv.habilidades }}</p>
+      <p><strong>Estado:</strong> {{ cv.estado }}</p>
+
+      <span class="badge text-bg-warning"
+        ><a href="{% url 'editar_cv' %}" class="text-black">Editar CV</a></span
+      >
+
+      <h2>Experiencias</h2>
+      <ul>
+        {% for experiencia in experiencias %}
+        <li>
+          <strong>{{ experiencia.puesto }}</strong> en
+          {{experiencia.empresa}}<br />
+          {{ experiencia.fecha_inicio }} - {{ experiencia.fecha_fin}}<br />
+          <p>{{ experiencia.descripcion }}</p>
+
+          <span class="badge text-bg-warning"
+            ><a
+              href="{% url 'editar_experiencia' experiencia.id %}"
+              class="text-black"
+              >Editar</a
+            ></span
+          >
+          |
+          <span class="badge text-bg-danger"
+            ><a
+              href="{% url 'eliminar_experiencia' experiencia.id %}"
+              class="text-light"
+              >Eliminar</a
+            ></span
+          >
+        </li>
+        {% empty %}
+        <li>No hay experiencias agregadas.</li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'agregar_experiencia' %}">Agregar Experiencia</a>
+
+      <h2>Certificados</h2>
+      <ul>
+        {% for certificado in certificados %}
+        <li>
+          <strong>{{ certificado.titulo }}</strong><br />
+          {{ certificado.descripcion }}<br />
+          <a href="{{ certificado.url_archivo }}" target="_blank"
+            >Ver Certificado PDF</a
+          ><br />
+
+          <span class="badge text-bg-warning"
+            ><a
+              href="{% url 'editar_certificado' certificado.id %}"
+              class="text-black"
+              >Editar</a
+            ></span
+          >
+          |
+          <span class="badge text-bg-danger"
+            ><a
+              href="{% url 'eliminar_certificado' certificado.id %}"
+              class="text-light"
+              >Eliminar</a
+            ></span
+          >
+        </li>
+        {% empty %}
+        <li>No hay certificados agregados.</li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'agregar_certificado' %}">Agregar Certificado</a>
+
+      <h2>Generar CV</h2>
+      <a href="{% url 'generar_cv_reportlab_individual' %}"
+        >Descargar CV en PDF</a
+      >
+    </div>
+  </div>
+</div>
+
+{% endblock %}

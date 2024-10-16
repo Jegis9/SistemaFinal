@@ -1,0 +1,117 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="row justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 form-container">
+      <h1 class="text-center">Personal</h1>
+      <form method="POST" class="contact-form form-validate">
+        {% if formulario.errors %}
+
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ formulario.errors }}
+        </div>
+        {% endif %} {% if messages %} {% for message in messages %}
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% csrf_token %}
+
+        <div class="row">
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="cargo">Cargo actual: </label>
+              <input
+                type="text"
+                name="cargo"
+                id="cargo"
+                class="form-control"
+                placeholder="Escribe Cargo actual"
+              />
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="tipo_sangre">Tipo sangre: </label>
+              <input
+                type="text"
+                name="tipo_sangre"
+                id="tipo_sangre"
+                class="form-control"
+                placeholder="Escribe tu Tipo sangre"
+              />
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="contacto_telefono_emergencia "
+                >Telefono emergencia:
+              </label>
+              <input
+                type="contacto_telefono_emergencia "
+                class="form-control"
+                id="contacto_telefono_emergencia "
+                name="contacto_telefono_emergencia "
+                placeholder="Escribe telefono emergencia"
+              />
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="contacto_email">Correo electronico: </label>
+              <input
+                type="contacto_email"
+                class="form-control"
+                id="contacto_email"
+                name="contacto_email"
+                placeholder="Correo electronico"
+              />
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="estado">Estado </label>
+              <br />
+              <input type="radio" id="activo" name="estado" value="True" />
+              <label for="html">Activo</label><br />
+               
+              <input type="radio" id="desactivo" name="estado" value="False" />
+                <label for="css">Desactivo</label><br />
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="form-group">
+              <label for="sobre_mi ">Sobre mi: </label>
+              <br />
+              <textarea id="sobre_mi" name="sobre_mi" rows="4" cols="50">
+              </textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <input
+            class="btn btn-success w-100"
+            type="submit"
+            value="Siguiente"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

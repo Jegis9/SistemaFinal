@@ -1,0 +1,223 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="row justify-content-center mt-4">
+  <meta name="csrf-token" content="{{ csrf_token }}" />
+
+  <script src="{% static 'js/validaciones.js' %}"></script>
+  <!-- Columna para el formulario -->
+  <h1 class="text-center">Asignacion de EPP a Personal</h1>
+  <div class="col-md-6 col-lg-5">
+    <div class="form-container">
+      <a href="{% url 'listaEPP' %}" class="btn btn-sm bg-primary text-light"
+        >Equipo de proteccion personal</a
+      >
+      <h1 class="text-center">Asignacion</h1>
+      <form method="POST" class="contact-form form-validate">
+        {% if formulario.errors %}
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ formulario.errors }}
+        </div>
+        {% endif %} {% if messages %} {% for message in messages %}
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% csrf_token %}
+        <div class="row">
+          <!-- Selección de Personal -->
+          <div class="col-sm-6 mb-3">
+            {% if users %}
+            <div class="form-group">
+              <label for="personal">Personal:</label>
+              <select name="personal" id="personal" class="form-control">
+                {% for user in users %}
+                <option value="{{ user.id }}">
+                  {{ user.profile.name1 }} {{ user.profile.lastname1 }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Selección de EPP -->
+          <div class="col-sm-6 mb-3">
+            {% if epps %}
+            <div class="form-group">
+              <label for="epp">EPP:</label>
+              <select name="epp" id="epp" class="form-control">
+                {% for epp in epps %}
+                <option value="{{ epp.codigo }}">
+                  {{ epp.nombre }} <i class="bi bi-pencil-fill"></i>
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            {% endif %}
+
+            <!-- Opción para agregar nuevo EPP -->
+            <div class="form-group mt-3">
+              <div class="alert alert-danger" role="alert">
+                <strong>¿No encuentras el EPP?</strong> Agrega uno nuevo:
+              </div>
+              <input
+                type="text"
+                name="nuevo_epp"
+                id="nuevo_epp"
+                class="form-control"
+                placeholder="Nombre del nuevo EPP"
+              />
+              <!-- Botón para guardar -->
+
+              <input
+                class="btn btn-success w-100"
+                type="submit"
+                value="Registrar equipo"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <input
+            class="btn btn-success w-100"
+            type="submit"
+            value="Registrar"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Columna para la tabla -->
+  <div class="col-md-6 col-lg-7">
+    <div
+      class="table-container mt-4 shadow p-3 mb-5 bg-body-tertiary rounded border border-secondary"
+    >
+      <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Personal</th>
+              <th>EPP asignado</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for asignacion in asignaciones %}
+            <tr>
+              <td>{{ asignacion.id }}</td>
+
+              <td>{{ asignacion.idPersonal.profile.name1 }}</td>
+              <td>{{ asignacion.idEpp.nombre }}</td>
+              <td>
+                <!-- Botón para Editar -->
+                <a
+                  href="{% url 'editar_asignacion_epp' asignacion.id %}"
+                  class="btn btn-primary btn-sm"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+
+                <button
+                  type="button"
+                  class="eliminar-btn btn btn-danger mb-2 mb-md-0"
+                  data-url="{% url 'eliminar_asignacion_epp' asignacion.id %}"
+                >
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+                <button
+                  class="btn btn-warning mb-2 mb-md-0"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#estadoEPP{{ asignacion.id }}"
+                >
+                  <i class="bi bi-recycle"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- Modal para cada asignación -->
+            <div
+              class="modal fade border"
+              id="estadoEPP{{ asignacion.id }}"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-warning">
+                    <h1
+                      class="modal-title fs-5 text-center text-black w-100"
+                      id="exampleModalLabel"
+                    >
+                      Reportar estado
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close bg-white"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+
+                  <div class="modal-body">
+                    <div class="container px-5 my-5">
+                      <form
+                        action="{% url 'estadoEPP' asignacion.id %}"
+                        method="POST"
+                      >
+                        {% csrf_token %}
+                        <label for="descripcion"
+                          >Descripción del reporte:</label
+                        >
+                        <div class="form-floating mb-3">
+                          <textarea
+                            name="descripcion"
+                            id="descripcion"
+                            rows="4"
+                            cols="50"
+                            class="form-control"
+                          ></textarea>
+                        </div>
+
+                        <input
+                          type="radio"
+                          id="estado"
+                          name="estado"
+                          value="malo"
+                          checked
+                          readonly
+                          hidden
+                        />
+                        <div class="d-grid">
+                          <button class="btn btn-warning btn-lg" type="submit">
+                            Guardar
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

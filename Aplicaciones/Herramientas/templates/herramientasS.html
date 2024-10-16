@@ -1,0 +1,235 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="row justify-content-center mt-4">
+  <meta name="csrf-token" content="{{ csrf_token }}" />
+
+  <script src="{% static 'js/validaciones.js' %}"></script>
+  <!-- Columna para el formulario -->
+  <h1 class="text-center">Herramienta</h1>
+  <div class="col-md-6 col-lg-5">
+    <div class="form-container">
+      <a
+        href="{% url 'listaHerramienta' %}"
+        class="btn btn-sm bg-primary text-light"
+        >Herramientas</a
+      >
+      <h1 class="text-center">Agregar herramienta</h1>
+      <form method="POST" class="contact-form form-validate">
+        {% if formulario.errors %}
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ formulario.errors }}
+        </div>
+        {% endif %} {% if messages %} {% for message in messages %}
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% csrf_token %}
+        <div class="row">
+          <!-- Selección de Personal -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="descripcion">Descripción:</label>
+              <input
+                type="text"
+                name="descripcion"
+                id="descripcion"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="tiempo">Fecha de mantenimiento:</label>
+              <input
+                type="date"
+                name="tiempo_mantenimiento"
+                id="tiempo"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <!-- Selección de EPP -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="herramienta">Herramienta:</label>
+              <select name="herramienta" id="herramienta" class="form-control">
+                {% for herramienta in herramientas %}
+                <option value="{{ herramienta.codigo }}">
+                  {{ herramienta.nombre }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Opción para agregar nuevo EPP -->
+            <div class="form-group mt-3">
+              <div class="alert alert-danger" role="alert">
+                <strong>¿No encuentras la herramieta?</strong> Agrega uno nuevo:
+              </div>
+              <input
+                type="text"
+                name="nuevo_herramienta"
+                id="nuevo_herramienta"
+                class="form-control"
+                placeholder="Nombre de la nueva herramienta"
+              />
+
+              <!-- Botón para guardar -->
+
+              <input
+                class="btn btn-success w-100"
+                type="submit"
+                value="Registrar equipo"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <input
+            class="btn btn-success w-100"
+            type="submit"
+            value="Registrar"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Columna para la tabla -->
+  <div class="col-md-6 col-lg-7">
+    <div
+      class="table-container mt-4 shadow p-3 mb-5 bg-body-tertiary rounded border border-secondary"
+    >
+      <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Herramienta</th>
+              <th>Descripcion</th>
+              <th>Fecha de mantenimiento</th>
+
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for mantenimiento in mantenimientos %}
+            <tr>
+              <td>{{ mantenimiento.id }}</td>
+              <td>{{ mantenimiento.herramienta.nombre }}</td>
+              <!-- Asegúrate que 'reportado' es el campo correcto -->
+              <td>{{ mantenimiento.descripcion }}</td>
+              <td>{{mantenimiento.tiempo_mantenimiento}}</td>
+              <td>
+                <!-- Botón para Editar -->
+                <a
+                  href="{% url 'editar_mantenimiento' mantenimiento.codigo %}"
+                  class="btn btn-primary btn-sm"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+
+                <button
+                  class="btn btn-warning mb-2 mb-md-0"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#estadoHerramienta{{ mantenimiento.herramienta.codigo }}"
+                >
+                  <i class="bi bi-recycle"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="eliminar-btn btn btn-danger mb-2 mb-md-0"
+                  data-url="{% url 'eliminar_herramienta' mantenimiento.codigo %}"
+                >
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- Modal para cada asignación -->
+            <div
+              class="modal fade border"
+              id="estadoHerramienta{{ mantenimiento.herramienta.codigo }}"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-warning">
+                    <h1
+                      class="modal-title fs-5 text-center text-black w-100"
+                      id="exampleModalLabel"
+                    >
+                      Reportar estado
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close bg-white"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+
+                  <div class="modal-body">
+                    <div class="container px-5 my-5">
+                      <form
+                        action="{% url 'estadoHerramienta' mantenimiento.herramienta.codigo %}"
+                        method="POST"
+                      >
+                        {% csrf_token %}
+                        <label for="descripcion"
+                          >Descripción del reporte:</label
+                        >
+                        <textarea
+                          name="descripcion"
+                          id="descripcion"
+                          rows="4"
+                          cols="50"
+                          class="form-control"
+                        ></textarea>
+
+                        <label for="estado">Estado:</label>
+
+                        <input
+                          type="radio"
+                          id="estado"
+                          name="estado"
+                          value="malo"
+                          checked
+                          readonly
+                        />
+
+                        <button
+                          class="btn btn-warning btn-lg mt-3"
+                          type="submit"
+                        >
+                          Guardar
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

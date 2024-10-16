@@ -1,0 +1,148 @@
+#slideBar {
+  background-color: #04724d;
+}
+i,
+span {
+  color: white;
+}
+button,
+.button {
+  border-radius: 8px;
+}
+.svgButtons {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.header-cell {
+  background-color: #04724d !important;
+  color: #ffffff !important;
+  border: solid 1px !important;
+}
+tr:first-child th:first-child {
+  border-top-left-radius: 8px;
+}
+
+tr:first-child th:last-child {
+  border-top-right-radius: 8px;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 15px;
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: 15px;
+}
+.img-circle {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #d5f9de;
+}
+
+#card1 {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(4, 205, 143, 1) 100%
+  );
+  border-bottom: 0.4rem solid green;
+}
+
+#card2 {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(102, 141, 226, 1) 100%
+  );
+  border-bottom: 0.4rem solid rgb(11, 11, 161);
+}
+
+#card3 {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(223, 126, 169, 1) 100%
+  );
+  border-bottom: 0.4rem solid rgb(245, 74, 103);
+}
+
+#card4 {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(223, 162, 92, 1) 100%
+  );
+  border-bottom: 0.4rem solid rgb(204, 145, 17);
+}
+
+#card5 {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(79, 70, 229, 1) 100%
+  );
+}
+
+#card6 {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(220, 38, 38, 1) 100%
+  );
+}
+
+.cardsEstadistics,
+.card {
+  width: 18rem;
+}
+
+.card1 {
+  background-color: green;
+}
+
+.card2 {
+  background-color: rgb(11, 11, 161);
+}
+.card3 {
+  background-color: rgb(245, 74, 103);
+}
+.card4 {
+  background-color: rgb(204, 145, 17);
+}
+.card1,
+.card2,
+.card3,
+.card4 {
+  border-radius: 8px;
+}
+
+/* estilos para el formulario de crear cuenta interna */
+.form-container {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-top: 50px;
+}
+.form-container h1 {
+  color: #28a745;
+  margin-bottom: 30px;
+}
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}

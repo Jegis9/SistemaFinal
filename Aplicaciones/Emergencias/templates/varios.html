@@ -1,0 +1,357 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="container mt-5">
+  <h2 class="mb-4">Lista de Servicios Varios</h2>
+  <a href="{% url 'add' %}" class="btn btn-primary">Volver</a>
+
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert alert-{{ message.tags }} alert-dismissible fade show"
+    role="alert"
+  >
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Cerrar"
+    ></button>
+  </div>
+  {% endfor %} {% endif %}
+
+  <table id="myTable" class="table table-striped table-bordered border-success">
+    <thead class="table-dark">
+      <tr>
+        <th class="header-cell w-5">Servicio:</th>
+        <th class="header-cell w-5">Fecha y Hora:</th>
+        <th class="header-cell w-5">Servicio de:</th>
+        <th class="header-cell w-5">Jefe de Servicio</th>
+        <th class="header-cell w-5">Autorizado Por:</th>
+        <th class="header-cell w-5">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for varios in varios %}
+      <tr>
+        <td>{{ varios.servicio.get_servicio_display }}</td>
+        <td>{{ varios.servicio.fecha_hora }}</td>
+        <td>{{ varios.servicio_de }}</td>
+        <td>{{ varios.jefe_servicio }}</td>
+        <td>{{ varios.servicio_autorizado_por }}</td>
+        <td>
+          <button
+            class="btn btn-warning"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#modalVarios{{ varios.id }}"
+          >
+            <i class="bi bi-eye"></i> Ver Detalles
+          </button>
+        </td>
+      </tr>
+
+      <!-- Modal for each Varios service -->
+      <div
+        class="modal fade"
+        id="modalVarios{{ varios.id }}"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <form
+              method="POST"
+              action="{% url 'editar_desactivar_varios' varios.id %}"
+            >
+              {% csrf_token %}
+              <div class="modal-header bg-warning">
+                <h5 class="modal-title">Detalles del Servicio Varios</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Cerrar"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <!-- Información General -->
+                  <div class="col-md-6">
+                    <h6>Información General</h6>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Estación:</strong></label
+                      >
+                      <input
+                        type="text"
+                        name="estacion"
+                        class="form-control"
+                        value="{{ varios.servicio.estacion }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"><strong>Turno:</strong></label>
+                      <input
+                        type="text"
+                        name="turno"
+                        class="form-control"
+                        value="{{ varios.servicio.turno }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Dirección:</strong></label
+                      >
+                      <input
+                        type="text"
+                        name="direccion"
+                        class="form-control"
+                        value="{{ varios.servicio.direccion }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Telefonista:</strong></label
+                      >
+                      <input
+                        type="text"
+                        name="telefonista"
+                        class="form-control"
+                        value="{{ varios.servicio.telefonista }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Bombero reporta:</strong></label
+                      >
+                      <input
+                        type="text"
+                        name="bombero_reporta"
+                        class="form-control"
+                        value="{{ varios.servicio.bombero_reporta }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"><strong>Unidad:</strong></label>
+                      <input
+                        type="text"
+                        name="unidad"
+                        class="form-control"
+                        value="{{ varios.servicio.unidad }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"><strong>Piloto:</strong></label>
+                      <input
+                        type="text"
+                        name="piloto"
+                        class="form-control"
+                        value="{{ varios.servicio.piloto }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <!-- Información Específica -->
+                  <div class="col-md-6">
+                    <h6>Detalles de Varios</h6>
+                    <div class="mb-3">
+                      <label class="form-label"><strong>Piloto:</strong></label>
+                      <input
+                        type="text"
+                        name="piloto"
+                        class="form-control"
+                        value="{{ varios.servicio.piloto }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Servicio de:</strong></label
+                      >
+                      <input
+                        type="text"
+                        name="servicio_de"
+                        class="form-control"
+                        value="{{ varios.servicio_de }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Jefe de servicio:</strong></label
+                      >
+                      <input
+                        type="text"
+                        name="jefe_servicio"
+                        class="form-control"
+                        value="{{ varios.jefe_servicio }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Servicio autorizado por:</strong></label
+                      >
+                      <input
+                        type="text"
+                        name="servicio_autorizado_por"
+                        class="form-control"
+                        value="{{ varios.servicio_autorizado_por }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Hora salida:</strong></label
+                      >
+                      <input
+                        type="datetime-local"
+                        name="salida_hora"
+                        class="form-control"
+                        value="{{ varios.servicio.salida_hora|date:'Y-m-d\\TH:i' }}"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Hora entrada:</strong></label
+                      >
+                      <input
+                        type="datetime-local"
+                        name="entrada_hora"
+                        class="form-control"
+                        value="{{ varios.servicio.entrada_hora|date:'Y-m-d\\TH:i' }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Tercera columna para campos adicionales -->
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <h6>Información Adicional</h6>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label class="form-label"
+                            ><strong>Personal asistente:</strong></label
+                          >
+                          <input
+                            type="text"
+                            name="personal_asistente"
+                            class="form-control"
+                            value="{{ varios.servicio.personal_asistente }}"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label class="form-label"
+                            ><strong>Km entrada:</strong></label
+                          >
+                          <input
+                            type="number"
+                            step="0.01"
+                            name="km_entrada"
+                            class="form-control"
+                            value="{{ varios.servicio.km_entrada }}"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label class="form-label"
+                            ><strong>Km salida:</strong></label
+                          >
+                          <input
+                            type="number"
+                            step="0.01"
+                            name="km_salida"
+                            class="form-control"
+                            value="{{ varios.servicio.km_salida }}"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label class="form-label"
+                            ><strong>Km recorridos:</strong></label
+                          >
+                          <input
+                            type="number"
+                            step="0.01"
+                            name="km_recorridos"
+                            class="form-control"
+                            value="{{ varios.servicio.km_recorridos }}"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="mb-3">
+                          <label class="form-label"
+                            ><strong>Observaciones:</strong></label
+                          >
+                          <textarea
+                            name="observaciones"
+                            class="form-control"
+                            rows="3"
+                          >
+{{ varios.servicio.observaciones }}</textarea
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a
+                  href="{% url 'generar_reporte_varios' varios.id %}"
+                  class="btn btn-success"
+                  >Descargar</a
+                >
+                <!-- <button
+                  type="submit"
+                  name="accion"
+                  value="desactivar"
+                  class="btn btn-danger"
+                  onclick="return confirm('¿Está seguro de que desea desactivar este servicio?')"
+                >
+                  Desactivar
+                </button>
+                <button
+                  type="submit"
+                  name="accion"
+                  value="editar"
+                  class="btn btn-primary"
+                >
+                  Editar
+                </button> -->
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center">Control de usuarios publicos</h1>
+    </div>
+  </div>
+
+  <div
+    class="row mt-4 shadow p-3 mb-5 bg-body-tertiary rounded border border-secondary"
+  >
+    {% if object_list %}
+    <div class="table-responsive">
+      <table
+        id="myTable"
+        class="table table-striped table-bordered border-success"
+      >
+        <thead>
+          <tr>
+            <th class="header-cell">#</th>
+            <th class="header-cell w-5">Nombre de usuario</th>
+            <th class="header-cell w-5 border">1er Nombre</th>
+            <th class="header-cell w-5 border">2do Nombre</th>
+            <th class="header-cell w-5 border">1er Apellido</th>
+            <th class="header-cell w-5 border">2do Apellido</th>
+
+            <th class="header-cell w-5 border">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in object_list %}
+          <tr>
+            <td class="border border-success">{{ user.id }}</td>
+            <td class="border border-success">{{ user.username }}</td>
+            <td class="border border-success">{{ user.profile.name1 }}</td>
+            <td class="border border-success">{{ user.profile.name2}}</td>
+            <td class="border border-success">{{ user.profile.lastname1 }}</td>
+            <td class="border border-success">{{ user.profile.lastname2 }}</td>
+
+            <td class="border border-success">
+              <div
+                class="d-flex flex-column flex-md-row justify-content-between"
+              >
+                {% if user.is_active %}
+                <form
+                  method="post"
+                  action="{% url 'desactivar_usuario_publico' user.id %}"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">
+                    Desactivar
+                  </button>
+                </form>
+                {% else %}
+                <span class="text-muted">Desactivado</span>
+                {% endif %} {% if not user.is_active %}
+                <form
+                  method="post"
+                  action="{% url 'activar_usuario_publico' user.id %}"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success">Activar</button>
+                </form>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

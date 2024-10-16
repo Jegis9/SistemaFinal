@@ -1,0 +1,249 @@
+{% extends 'baseLangind.html' %} {% load static %} {% block content%}
+
+<div
+  id="carouselExampleInterval"
+  class="carousel slide"
+  data-bs-ride="carousel"
+>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="10000">
+      <img
+        src="{% static 'img/equipo.jpeg' %}"
+        class="d-block w-100 carousel-image"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="text-light fs-5">Título de la Imagen 1</h5>
+        <p>Descripción o mensaje para la imagen 1.</p>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="10000">
+      <img
+        src="{% static 'img/entrenamiento.jpg' %}"
+        class="d-block w-100 carousel-image"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Título de la Imagen 2</h5>
+        <p>Descripción o mensaje para la imagen 2.</p>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="10000">
+      <img
+        src="{% static 'img/equipo2.jpg' %}"
+        class="d-block w-100 carousel-image"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Título de la Imagen 3</h5>
+        <p>Descripción o mensaje para la imagen 3.</p>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="10000">
+      <img
+        src="{% static 'img/ambulancia.jpg' %}"
+        class="d-block w-100 carousel-image"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Título de la Imagen 4</h5>
+        <p>Descripción o mensaje para la imagen 4.</p>
+      </div>
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleInterval"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleInterval"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div
+  class="container mt-5 border border-success rounded shadow p-3 containerInfo"
+>
+  <h2 class="text-center">Contactanos</h2>
+  <div class="d-flex flex-wrap justify-content-center">
+    <div class="m-3">
+      <div class="card" style="width: 18rem">
+        <div class="d-flex justify-content-center align-items-center p-4">
+          <i class="bi bi-telephone-fill" style="font-size: 2rem"></i>
+        </div>
+        <div class="card-body">
+          <p class="card-text text-center">
+            <span class="fw-bold">Números de teléfono:</span> <br />
+            40261783 - 77665152
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-3">
+      <div class="card" style="width: 18rem">
+        <div class="d-flex justify-content-center align-items-center p-4">
+          <i class="bi bi-geo-alt-fill" style="font-size: 2rem"></i>
+        </div>
+        <div class="card-body">
+          <p class="card-text text-center">
+            <span class="fw-bold"> Ubicacion: </span>
+            <br />
+            Totonicapán Dirección: 12av. Entre 5ta. Y 6ta. Calle Zona 3
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="m-3">
+      <div class="card" style="width: 18rem">
+        <div class="d-flex justify-content-center align-items-center p-4">
+          <i class="bi bi-envelope" style="font-size: 2rem"></i>
+        </div>
+        <div class="card-body">
+          <p class="card-text text-center">
+            <span class="fw-bold">Correo electronico</span>
+            <br />
+            BMToto@gmail.com
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="container mt-5 border border-success rounded shadow p-3 containerInfo"
+>
+  <h2 class="text-center">Servicios</h2>
+  <div class="d-flex flex-wrap justify-content-center">
+    <div class="m-3" style="width: 18rem">
+      <div class="d-flex justify-content-center mt-3">
+        <img src="{% static 'svg/fire.svg' %}" class="img-circle" alt="..." />
+      </div>
+      <div class="card-body">
+        <p class="card-text border rounded shadow p-3 mt-2 text-center">
+          <span class="fw-bold text-light fs-5 border-bottom"
+            >Control y Extinción de Incendios</span
+          >
+          <br />
+          Respondemos de manera inmediata a incendios residenciales, comerciales
+          y forestales, utilizando técnicas avanzadas y equipos de última
+          generación para proteger vidas y propiedades.
+        </p>
+      </div>
+    </div>
+    <div class="m-3" style="width: 18rem">
+      <div class="d-flex justify-content-center mt-3">
+        <img
+          src="{% static 'svg/carCrash.svg' %}"
+          class="img-circle"
+          alt="..."
+        />
+      </div>
+      <div class="card-body">
+        <p class="card-text border rounded shadow p-3 mt-2 text-center">
+          <span class="fw-bold text-light fs-5 border-bottom">
+            Accidentes de Tráfico
+          </span>
+          <br />
+          Nuestro equipo de rescate acude rápidamente a la escena de choques y
+          accidentes de tráfico, brindando asistencia médica de emergencia y
+          asegurando el entorno para prevenir daños mayores.
+        </p>
+      </div>
+    </div>
+    <div class="m-3" style="width: 18rem">
+      <div class="d-flex justify-content-center mt-3">
+        <img
+          src="{% static 'svg/ambulance.svg' %}"
+          class="img-circle"
+          alt="..."
+        />
+      </div>
+      <div class="card-body">
+        <p class="card-text border rounded shadow p-3 mt-2 text-center">
+          <span class="fw-bold text-light fs-5 border-bottom"
+            >Servicios de Ambulancia</span
+          >
+          <br />
+          Ofrecemos transporte médico de emergencia con ambulancias equipadas
+          para brindar atención avanzada en el camino al hospital, asegurando
+          que cada segundo cuente en situaciones críticas.
+        </p>
+      </div>
+    </div>
+
+    <div class="m-3" style="width: 18rem">
+      <div class="d-flex justify-content-center mt-3">
+        <img src="{% static 'svg/pet.svg' %}" class="img-circle" alt="..." />
+      </div>
+      <div class="card-body">
+        <p class="card-text border rounded shadow p-3 mt-2 text-center">
+          <span class="fw-bold text-light fs-5 border-bottom"
+            >Rescate de Animales</span
+          >
+          <br />
+          Rescatamos animales en situaciones de peligro, desde mascotas
+          atrapadas en edificios hasta fauna silvestre en entornos urbanos,
+          actuando con cuidado y compasión para proteger a todos los seres
+          vivos.
+        </p>
+      </div>
+    </div>
+
+    <div class="m-3" style="width: 18rem">
+      <div class="d-flex justify-content-center mt-3">
+        <img src="{% static 'svg/toxic.svg' %}" class="img-circle" alt="..." />
+      </div>
+      <div class="card-body">
+        <p class="card-text border rounded shadow p-3 mt-2 text-center">
+          <span class="fw-bold text-light fs-5 border-bottom"
+            >Gases y sustancias toxicas</span
+          >
+          <br />
+          Somos expertos en la detección y control de fugas de gases peligrosos
+          y manejo de sustancias tóxicas, garantizando la seguridad de los
+          habitantes y la preservación del medio ambiente.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="container border border-success rounded shadow p-3 mt-5 containerInfo mb-5"
+>
+  <h2 class="text-center">Nuestra ubicacion</h2>
+
+  <div class="container mt-5">
+    <div class="d-flex flex-wrap justify-content-center">
+      <div class="m-3" style="width: 18rem">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3855.4621375277084!2d-91.365514523937!3d14.911324569391862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x858eaf7aa47ef8bf%3A0xafaef86e580f6cd3!2sBomberos%20Municipales%20Totonicap%C3%A1n!5e0!3m2!1ses-419!2sgt!4v1721800137560!5m2!1ses-419!2sgt"
+          width="600"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="border rounded shadow p-3"
+        ></iframe>
+      </div>
+      <div class="m-3" style="width: 18rem">
+        <div class=""></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

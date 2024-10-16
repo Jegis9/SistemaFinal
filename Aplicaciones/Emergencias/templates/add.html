@@ -1,0 +1,77 @@
+{% extends "baseG.html" %} {% load static %} {% load crispy_forms_tags %}
+{%block body %}
+
+<div class="row justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 form-container">
+      <h1 class="text-center">Crear servicio</h1>
+      <form method="post">
+        {% csrf_token %}
+        <fieldset>
+          <legend>Información del Servicio</legend>
+          {{ servicio_form|crispy }}
+        </fieldset>
+
+        <!-- Formulario Varios -->
+        <fieldset id="varios-form" class="hidden-form">
+          <legend>Información Varios</legend>
+          {{ varios_form|crispy }}
+        </fieldset>
+
+        <!-- Formulario Ambulancia -->
+        <fieldset id="ambulancia-form" class="hidden-form">
+          <legend>Información Ambulancia</legend>
+          {{ ambulancia_form|crispy }}
+        </fieldset>
+
+        <!-- Formulario Incendios -->
+        <fieldset id="incendios-form" class="hidden-form">
+          <legend>Información Incendios</legend>
+          {{ incendios_form|crispy }}
+        </fieldset>
+
+        <button type="submit" class="bg-success text-light w-100">
+          Guardar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Script JavaScript para manejar la visibilidad de los formularios adicionales -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const servicioRadios = document.querySelectorAll('input[name="servicio"]');
+    const camposVarios = document.getElementById("varios-form");
+    const camposAmbulancia = document.getElementById("ambulancia-form");
+    const camposIncendios = document.getElementById("incendios-form");
+
+    function toggleFields() {
+      camposVarios.style.display = "none";
+      camposAmbulancia.style.display = "none";
+      camposIncendios.style.display = "none";
+
+      const selectedService = document.querySelector(
+        'input[name="servicio"]:checked'
+      );
+      if (selectedService) {
+        if (selectedService.value === "1") {
+          // Cambiado de "varios" a "1"
+          camposVarios.style.display = "block";
+        } else if (selectedService.value === "2") {
+          camposAmbulancia.style.display = "block";
+        } else if (selectedService.value === "3") {
+          camposIncendios.style.display = "block";
+        }
+      }
+    }
+
+    servicioRadios.forEach((radio) => {
+      radio.addEventListener("change", toggleFields);
+    });
+
+    // Ejecutar la función al cargar la página para manejar ediciones
+    toggleFields();
+  });
+</script>
+{% endblock %}

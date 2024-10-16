@@ -1,0 +1,44 @@
+
+
+    <div class="seccion">
+      <h2>Información Personal</h2>
+      <p><strong>Cargo:</strong> {{ cv.cargo }}</p>
+      <p><strong>Sobre mí:</strong> {{ cv.sobre_mi }}</p>
+      <p><strong>Tipo de Sangre:</strong> {{ cv.tipo_sangre }}</p>
+      <p><strong>Contacto (Email):</strong> {{ cv.contacto_email }}</p>
+      <p>
+        <strong>Contacto (Teléfono de Emergencia):</strong> {{
+        cv.contacto_telefono_emergencia }}
+      </p>
+      <p><strong>Habilidades:</strong> {{ cv.habilidades }}</p>
+      <p><strong>Estado:</strong> {{ cv.estado }}</p>
+    </div>
+
+    <div class="seccion">
+      <h2>Experiencias</h2>
+      {% for experiencia in experiencias %}
+      <div class="experiencia">
+        <strong>{{ experiencia.puesto }}</strong> en {{ experiencia.empresa
+        }}<br />
+        {{ experiencia.fecha_inicio }} - {{
+        experiencia.fecha_fin|default:"Presente" }}<br />
+        <p>{{ experiencia.descripcion }}</p>
+      </div>
+      {% empty %}
+      <p>No hay experiencias agregadas.</p>
+      {% endfor %}
+    </div>
+
+    <div class="seccion">
+      <h2>Certificados</h2>
+      {% for certificado in certificados %}
+      <div class="certificado">
+        <strong>{{ certificado.titulo }}</strong><br />
+        <p>{{ certificado.descripcion }}</p>
+        <a href="{{ certificado.url_archivo }}">Ver Certificado PDF</a>
+      </div>
+      {% empty %}
+      <p>No hay certificados agregados.</p>
+      {% endfor %}
+    </div>
+  </body>

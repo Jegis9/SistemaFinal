@@ -1,0 +1,9 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<h2>Eliminar Certificado</h2>
+<p>¿Estás seguro de que deseas eliminar el certificado "{{ certificado }}"?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirmar</button>
+  <a href="{% url 'perfil' %}">Cancelar</a>
+</form>
+{% endblock %}

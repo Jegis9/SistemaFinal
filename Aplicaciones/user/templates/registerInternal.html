@@ -1,0 +1,348 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="row justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 form-container">
+      <h1 class="text-center">Crear cuenta</h1>
+      <form
+        method="POST"
+        class="contact-form form-validate"
+        onsubmit="return validateForm();"
+      >
+        <!-- Mensajes de error y éxito -->
+        {% if formulario.errors %}
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ formulario.errors }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endif %} {% if messages %} {% for message in messages %}
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Mensaje: </strong> {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% csrf_token %}
+
+        <div class="row">
+          <!-- Nombre de usuario -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="username">Nombre de usuario:</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                class="form-control"
+                placeholder="Escribe tu usuario"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="password1">Contraseña: </label>
+              <input
+                type="password"
+                name="password1"
+                id="password1"
+                class="form-control"
+                placeholder="Escribe tu contraseña"
+                required
+                minlength="8"
+                pattern="^(?=.*[A-Z])(?=.*\d).+$"
+                title="La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula y un número."
+              />
+              <small class="form-text text-muted">
+                La contraseña debe tener al menos 8 caracteres, incluir una
+                letra mayúscula y un número.
+              </small>
+            </div>
+          </div>
+
+          <!-- Repetir Contraseña -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="password2">Repite tu contraseña: </label>
+              <input
+                type="password"
+                name="password2"
+                id="password2"
+                class="form-control"
+                placeholder="Repite tu contraseña"
+                required
+                minlength="8"
+                pattern="^(?=.*[A-Z])(?=.*\d).+$"
+                title="La contraseña debe coincidir con la anterior y cumplir los requisitos de seguridad."
+              />
+              <small class="form-text text-muted">
+                Repite la contraseña anterior.
+              </small>
+            </div>
+          </div>
+
+          <!-- Correo Electrónico -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="email">Correo electrónico: </label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="example@gmail.com"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Número de DPI -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="pdi">Número de DPI: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="pdi"
+                name="pdi"
+                placeholder="12311234564"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Primer Nombre -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="name1">Primer nombre: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="name1"
+                name="name1"
+                placeholder="Ej: Josue"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Segundo Nombre -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="name2">Segundo nombre: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="name2"
+                name="name2"
+                placeholder="Ej: Luis"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Primer Apellido -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="lastname1">Primer apellido: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="lastname1"
+                name="lastname1"
+                placeholder="Ej: Gomez"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Segundo Apellido -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="lastname2">Segundo apellido: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="lastname2"
+                name="lastname2"
+                placeholder="Ej: Gutierrez"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Cumpleaños -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="birthday">Cumpleaños: </label>
+              <input
+                type="date"
+                class="form-control"
+                id="birthday"
+                name="birthday"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Número de Celular -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="phone">Número de celular: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone"
+                name="phone"
+                placeholder="4543-5453"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Municipio -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="municipio">Municipio: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="municipio"
+                name="municipio"
+                placeholder="Ej: Totonicapán"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Dirección -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="direccion">Dirección: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="direccion"
+                name="direccion"
+                placeholder="Ej: Zona 2 de Totonicapán 10ma avenida y 5ta calle"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Género -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label for="gender">Género</label>
+              {% for radio in formulario.gender %}
+              <div class="form-check">
+                {{ radio.tag }}
+                <!-- Renderiza el input de tipo radio -->
+                {{ radio.choice_label }}
+                <!-- Renderiza la etiqueta del radio -->
+              </div>
+              {% endfor %} {% if formulario.gender.errors %}
+              <div class="text-danger">{{ formulario.gender.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <input class="btn btn-success" type="submit" value="Registrar" />
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function validateForm() {
+    const password1 = document.getElementById("password1").value;
+    const password2 = document.getElementById("password2").value;
+    const dpi = document.getElementById("pdi").value;
+    const phone = document.getElementById("phone").value;
+    const birthday = document.getElementById("birthday").value;
+
+    // Expresión regular para al menos una letra mayúscula y un número
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).+$/;
+
+    // Función para mostrar errores con SweetAlert
+    function showError(message) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: message,
+        confirmButtonText: "Aceptar",
+      });
+    }
+
+    // Verificar que las contraseñas coincidan
+    if (password1 !== password2) {
+      showError("Las contraseñas no coinciden.");
+      return false;
+    }
+
+    // Validar que la contraseña cumpla con los requisitos
+    if (!passwordRegex.test(password1)) {
+      showError(
+        "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula y un número."
+      );
+      return false;
+    }
+
+    // Validar que la contraseña tenga al menos 8 caracteres
+    if (password1.length < 8) {
+      showError("La contraseña debe tener al menos 8 caracteres.");
+      return false;
+    }
+
+    // Validar que el DPI tenga 13 dígitos numéricos
+    if (dpi.length >= 13 || isNaN(dpi)) {
+      showError("El DPI debe tener 13 dígitos numéricos.");
+      return false;
+    }
+
+    // Validar número de teléfono (Guatemala suele usar 8 dígitos)
+    if (phone.length !== 8 || isNaN(phone)) {
+      showError("El número de teléfono debe tener 8 dígitos numéricos.");
+      return false;
+    }
+
+    // Validar que el usuario tenga al menos 18 años
+    if (!isAtLeast18(birthday)) {
+      showError("Debes tener al menos 18 años para registrarte.");
+      return false;
+    }
+
+    // Puedes agregar más validaciones aquí si es necesario
+
+    return true;
+  }
+
+  // Función para verificar si la persona tiene al menos 18 años
+  function isAtLeast18(birthdate) {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age >= 18;
+  }
+</script>
+{% endblock %}

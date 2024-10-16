@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mapa con Ruta usando Leaflet</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- CSS de Leaflet Routing Machine -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"
+    />
+    <!-- CSS de Leaflet Control Geocoder (opcional) -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+    />
+
+    <style>
+      /* Estilos básicos */
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+      #formulario {
+        margin-bottom: 10px;
+      }
+      #formulario input {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Calcula una Ruta en el Mapa</h1>
+    <div id="formulario">
+      <input
+        type="text"
+        id="origen"
+        placeholder="Ingresa dirección de origen"
+        size="50"
+      />
+      <input
+        type="text"
+        id="destino"
+        placeholder="Ingresa dirección de destino"
+        size="50"
+      />
+      <button onclick="calcularRuta()">Calcular Ruta</button>
+    </div>
+    <div id="map"></div>
+
+    <!-- JS de Leaflet -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- JS de Leaflet Routing Machine -->
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <!-- JS de Leaflet Control Geocoder (opcional) -->
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <script>
+      // Inicializar el mapa centrado en Ciudad de México
+      let map = L.map("map").setView([19.432608, -99.133209], 13);
+
+      // Añadir capa de OpenStreetMap
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
+
+      // Variable para almacenar el control de enrutamiento
+      let routingControl;
+
+      // Función para calcular la ruta
+      function calcularRuta() {
+        const origen = document.getElementById("origen").value;
+        const destino = document.getElementById("destino").value;
+
+        if (!origen || !destino) {
+          alert("Por favor, ingresa ambas direcciones: origen y destino.");
+          return;
+        }
+
+        // Geocodificar ambas direcciones usando Nominatim
+        Promise.all([geocode(origen), geocode(destino)])
+          .then((results) => {
+            const [origenCoords, destinoCoords] = results;
+
+            if (!origenCoords || !destinoCoords) {
+              alert("No se pudieron geocodificar una o ambas direcciones.");
+              return;
+            }
+
+            // Si ya existe una ruta, eliminarla
+            if (routingControl) {
+              map.removeControl(routingControl);
+            }
+
+            // Añadir la ruta al mapa
+            routingControl = L.Routing.control({
+              waypoints: [
+                L.latLng(origenCoords.lat, origenCoords.lon),
+                L.latLng(destinoCoords.lat, destinoCoords.lon),
+              ],
+              routeWhileDragging: true,
+              geocoder: L.Control.Geocoder.nominatim(),
+            }).addTo(map);
+
+            // Ajustar la vista del mapa para mostrar toda la ruta
+            routingControl.on("routesfound", function (e) {
+              const routes = e.routes;
+              if (routes.length > 0) {
+                map.fitBounds(routes[0].bounds);
+              }
+            });
+          })
+          .catch((error) => {
+            console.error("Error al geocodificar:", error);
+            alert("Ocurrió un error al geocodificar las direcciones.");
+          });
+      }
+
+      // Función para geocodificar una dirección usando Nominatim
+      function geocode(address) {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          address
+        )}`;
+
+        return fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.length > 0) {
+              return data[0];
+            } else {
+              return null;
+            }
+          })
+          .catch((error) => {
+            console.error("Error en geocodificación:", error);
+            return null;
+          });
+      }
+    </script>
+  </body>
+</html>
