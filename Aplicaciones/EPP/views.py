@@ -23,7 +23,7 @@ def is_admin(user):
 def is_staff(user):
     return user.groups.filter(name='Personal').exists()
 def is_admin_or_staff(user):
-    return user.is_authenticated and (user.is_staff or user.groups.filter(name='Administrador').exists())
+    return user.is_authenticated and user.groups.filter(name__in=['Administrador', 'Personal']).exists()
 
 @login_required
 @user_passes_test(is_admin_or_staff, login_url='error')
