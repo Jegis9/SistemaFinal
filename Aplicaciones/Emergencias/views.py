@@ -25,6 +25,40 @@ def is_admin_or_staff(user):
 
 logo_derecha = finders.find('img/images.png')
 
+from collections import defaultdict
+from django.shortcuts import render
+from .models import Ambulancia, Categorias_emergencias
+
+def reporte_ambulancia(request):
+    # Obtenemos todos los registros de Ambulancia
+    ambulancias = Ambulancia.objects.select_related('servicio', 'codigo_emergencia')
+
+    # Agrupamos por mes y código de emergencia manualmente usando defaultdict
+    reportes = defaultdict(lambda: defaultdict(int))  # Estructura: {año-mes: {codigo_emergencia: total}}
+
+    for ambulancia in ambulancias:
+        # Obtenemos el año y mes desde el campo fecha_hora
+        año_mes = ambulancia.servicio.fecha_hora.strftime('%Y-%m')
+        codigo_emergencia = ambulancia.codigo_emergencia.id
+        reportes[año_mes][codigo_emergencia] += 1
+
+    # Formateamos los resultados para enviarlos al template
+    resultados = []
+    for año_mes, emergencias in reportes.items():
+        for codigo, total in emergencias.items():
+            # Obtenemos el nombre correcto de la emergencia por el código
+            nombre = Categorias_emergencias.objects.get(id=codigo).nombre
+            resultados.append({
+                'codigo': codigo,
+                'nombre': nombre,
+                'total': total,
+                'fecha': año_mes  # Fecha en formato 'Año-Mes'
+            })
+    
+    return render(request, 'reporte_ambulancia.html', {'resultados': resultados})
+
+
+
 
 
 @login_required
@@ -347,9 +381,11 @@ def generar_reporte_ambulancia(request, ambulancia_id):
     # p.drawString(20, y, "Firma Jefe del Servicio: _______________")
     p.drawString(50, y, "Estación:")
     p.drawString(200, y, "Turno:")
+    p.drawString(300, y, "Código:")
     p.setFont("Helvetica", 10)
     p.drawString(110, y, f"{servicio.estacion}")
     p.drawString(250, y, f"{servicio.turno}")
+    p.drawString(350, y, f"{ambulancia.codigo_emergencia.id}")
 
     y -= 20
 

@@ -72,13 +72,15 @@ $(document).ready(function () {
       {
         extend: "copy",
         exportOptions: {
-          columns: ":not(:last-child)", // Excluye la última columna (opciones)
+          columns: ":not(:last-child)",
+          rows: ":visible",
         },
       },
       {
         extend: "excel",
         exportOptions: {
-          columns: ":not(:last-child)", // Excluye la última columna (opciones)
+          columns: ":not(:last-child)",
+          rows: ":visible",
         },
         customize: function (xlsx) {
           var sheet = xlsx.xl.worksheets["sheet1.xml"];
@@ -89,34 +91,56 @@ $(document).ready(function () {
       {
         extend: "pdf",
         exportOptions: {
-          columns: ":not(:last-child)", // Excluye la última columna (opciones)
+          columns: ":not(:last-child)",
+          rows: ":visible",
+          stripHtml: false,
         },
         customize: function (doc) {
-          // Cambiar el título
+          // Establecer el título
           doc.content[0].text = "Reporte";
 
-          doc.content[1].table.widths = Array(
-            doc.content[1].table.body[0].length + 1
-          )
-            .join("*")
-            .split("");
-          doc.defaultStyle.alignment = "center";
+          // Asegurarse de que la tabla tenga los encabezados
+          doc.content[1].table.headerRows = 1;
+
+          // Estilo para los encabezados
           doc.styles.tableHeader = {
             color: "white",
-
+            fillColor: "#2196F3",
             alignment: "center",
             fontSize: 12,
             bold: true,
+            margin: [5, 5, 5, 5],
           };
+
+          // Estilo para las celdas
+          doc.styles.tableBodyEven = {
+            alignment: "center",
+            fontSize: 11,
+          };
+
+          doc.styles.tableBodyOdd = {
+            alignment: "center",
+            fontSize: 11,
+          };
+
+          // Ajustar el ancho de las columnas automáticamente
+          doc.content[1].table.widths = Array(
+            doc.content[1].table.body[0].length
+          ).fill("*");
+
+          // Estilo general del documento
+          doc.defaultStyle.alignment = "center";
           doc.content[0].alignment = "center";
           doc.content[0].fontSize = 16;
           doc.content[0].bold = true;
+          doc.pageMargins = [40, 60, 40, 60];
         },
       },
       {
         extend: "print",
         exportOptions: {
-          columns: ":not(:last-child)", // Excluye la última columna (opciones)
+          columns: ":not(:last-child)",
+          rows: ":visible",
         },
         customize: function (win) {
           $(win.document.body).css("font-size", "10pt");
@@ -125,7 +149,6 @@ $(document).ready(function () {
             .addClass("compact")
             .css("font-size", "inherit");
 
-          // Cambiar el título
           $(win.document.body)
             .find("h1")
             .text("Reporte")

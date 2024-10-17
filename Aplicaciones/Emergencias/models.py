@@ -41,8 +41,12 @@ class Varios(models.Model):
         return f"Varios - {self.servicio}"
 
 class Categorias_emergencias(models.Model):
+    id = models.CharField(primary_key=True, max_length=10)  # Sobrescribe el campo id
     nombre = models.CharField(max_length=100, blank=False, null=False)
-    
+
+    def __str__(self):
+        return self.nombre
+
 
 class Ambulancia(models.Model):
 

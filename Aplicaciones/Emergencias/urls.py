@@ -13,6 +13,7 @@ urlpatterns = [
     path('editar_desactivar_varios/<int:pk>/', views.editar_desactivar_varios, name='editar_desactivar_varios'),
     path('pruebaservicios/', views.tabla_servicios, name='pruebaservicios'),
     path('vista_kilometraje/', views.vista_kilometraje, name='vista_kilometraje'),
+    path('reporte_ambulancia/', views.reporte_ambulancia, name='reporte_ambulancia')
     # path('servicios/', views.lista_servicios, name='lista_servicios'),  # Nueva URL
     # path('servicios/varios/', views.lista_varios, name='lista_varios'),
     # path('servicios/ambulancia/', views.lista_ambulancia, name='lista_ambulancia'),

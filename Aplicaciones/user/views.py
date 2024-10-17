@@ -96,8 +96,8 @@ def register(request):
 
 
 # Vista para crear usuarios (solo administradores)
-@login_required
-@user_passes_test(is_admin, login_url='error')
+# @login_required
+# @user_passes_test(is_admin, login_url='error')
 
 def nuevo_registro(request):
     if request.method == 'POST':
