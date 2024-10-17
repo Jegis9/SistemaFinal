@@ -15,11 +15,21 @@ from .models import Servicio, Varios, Ambulancia, Incendios
 from django.contrib.staticfiles import finders
 from django.contrib.auth.decorators import login_required
 
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
 
+
+def is_admin_or_staff(user):
+    return user.is_authenticated and (user.is_staff or user.groups.filter(name='Administrador').exists())
 
 
 logo_derecha = finders.find('img/images.png')
+
+
+
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def servicio_create_view(request):
     if request.method == 'POST':
         servicio_form = ServicioForm(request.POST)
@@ -65,6 +75,7 @@ def servicio_create_view(request):
 
         
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def varios_list_view(request):
     varios_list = Varios.objects.filter(servicio__activo=True)
     # Get the choices for the service field
@@ -91,6 +102,7 @@ def servicio_list_view(request):
 # views.py
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def editar_desactivar_varios(request, pk):
     varios = get_object_or_404(Varios, pk=pk)
     servicio = varios.servicio  # Relación con Servicio
@@ -121,7 +133,8 @@ def editar_desactivar_varios(request, pk):
 
 
 from .models import Servicio
-
+@login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def tabla_servicios(request):
     servicios = Servicio.objects.filter(activo=True).values(
         'piloto',
@@ -134,7 +147,8 @@ def tabla_servicios(request):
     )
     return render(request, 'unificado.html', {'servicios': servicios})
 
-
+@login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def vista_kilometraje(request):
     servicios = Servicio.objects.filter(activo=True).values(
         'unidad',
@@ -150,6 +164,7 @@ def vista_kilometraje(request):
 
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 # CODIGO PARA GENERAR REPORTES SEGUN SEA EL SERVICIO
 def generar_reporte_servicios_varios(request, varios_id):
     varios = get_object_or_404(Varios, id=varios_id)
@@ -288,7 +303,12 @@ def generar_reporte_servicios_varios(request, varios_id):
     p.showPage()
     p.save()
     return response
+
+
+
+
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def generar_reporte_ambulancia(request, ambulancia_id):
     ambulancia = get_object_or_404(Ambulancia, id=ambulancia_id)
     servicio = ambulancia.servicio
@@ -440,6 +460,7 @@ def generar_reporte_ambulancia(request, ambulancia_id):
 
     return response
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def generar_reporte_incendios(request, incendio_id):
     incendio = get_object_or_404(Incendios, id=incendio_id)
     servicio = incendio.servicio

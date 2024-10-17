@@ -8,8 +8,26 @@ from django.contrib.auth.decorators import login_required
 from .forms import AsignacionEppForm, EPPForm
 from django.core.mail import send_mail
 # Create your views here.
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
+
+from Aplicaciones.user.models import Profile
+
+# Funciones auxiliares para verificar permisos
+def is_admin(user):
+    return user.groups.filter(name='Administrador').exists()
+
+def is_staff(user):
+    return user.groups.filter(name='Personal').exists()
+def is_admin_or_staff(user):
+    return user.is_authenticated and (user.is_staff or user.groups.filter(name='Administrador').exists())
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
+
 def epp(request):
     if request.method == 'POST':
         personal_id = request.POST.get('personal')
@@ -39,7 +57,9 @@ def epp(request):
             "epps": epps, 
             "asignaciones": asignaciones
         })
+        
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def editar_asignacion_epp(request, asignacion_id):
     asignacion = get_object_or_404(PersonalEpps, id=asignacion_id)
     if request.method == 'POST':
@@ -53,6 +73,7 @@ def editar_asignacion_epp(request, asignacion_id):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def eliminar_asignacion_epp(request, asignacion_id):
     asignacion = get_object_or_404(PersonalEpps, id=asignacion_id)
     if request.method == 'POST':
@@ -62,6 +83,7 @@ def eliminar_asignacion_epp(request, asignacion_id):
 
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def estadoEPP(request, asignado_id):
     # Obtener la instancia de PersonalEpps
     asignacion = get_object_or_404(PersonalEpps, id=asignado_id)
@@ -108,8 +130,8 @@ def estadoEPP(request, asignado_id):
         return render(request, 'epp.html', {"asignacion": asignacion})  # Cargar la página con la asignación
 
 
- 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def marcar_arregladoEPP(request, codigo):
     estado = get_object_or_404(EstadoEPP, codigo=codigo)
     estado.estado = "Bueno"  # Cambia el estado a "Bueno"
@@ -118,12 +140,13 @@ def marcar_arregladoEPP(request, codigo):
     return redirect('lEpp')  # Redirige de nuevo a la lista
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def lEpp(request):
     estados = EstadoEPP.objects.filter(estado__in=["malo", "Malo"])  # Filtrar solo los estados no arreglados
     return render(request, 'lepp.html', {"estados": estados})
 
-
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def listaEPP(request):
     epp = Epp.objects.all()
     
@@ -131,6 +154,7 @@ def listaEPP(request):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def eliminar_epp(request, codigo_epp):
     epp = get_object_or_404(Epp, codigo=codigo_epp)
     if request.method == 'POST':
@@ -142,6 +166,7 @@ def eliminar_epp(request, codigo_epp):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def editar_epp(request, codigo_epp):
     epp = get_object_or_404(Epp, codigo=codigo_epp)
     if request.method == 'POST':

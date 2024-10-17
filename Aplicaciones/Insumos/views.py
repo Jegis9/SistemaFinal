@@ -11,7 +11,28 @@ from .forms import Insumo
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
+
+from Aplicaciones.user.models import Profile
+
+# Funciones auxiliares para verificar permisos
+def is_admin(user):
+    return user.groups.filter(name='Administrador').exists()
+
+def is_staff(user):
+    return user.groups.filter(name='Personal').exists()
+
+def is_admin_or_staff(user):
+    return user.is_authenticated and (user.is_staff or user.groups.filter(name='Administrador').exists())
+
+
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
+
 def registrar_insumo_nuevo(request):
     if request.method == 'POST':
         # Obtener datos del formulario
@@ -62,6 +83,7 @@ def registrar_insumo_nuevo(request):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def eliminar_insumo(request, insumo_id):
     insumo = get_object_or_404(Insumo, codigo=insumo_id)
     if request.method == 'POST':
@@ -74,6 +96,7 @@ def eliminar_insumo(request, insumo_id):
 
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def ajustar_stock(request, codigo):
     try:
         insumo = Insumo.objects.get(codigo=codigo)
@@ -136,7 +159,7 @@ def ajustar_stock(request, codigo):
         return redirect('registrar_insumo_nuevo')
 
 @login_required
-
+@user_passes_test(is_admin, login_url='error')
 def detalle_insumo(request, codigo):
     try:
         insumo = Insumo.objects.get(codigo=codigo)

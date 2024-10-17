@@ -38,8 +38,22 @@ def profile(request):
 
 @login_required
 def profile_Interno(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            try:
+                profile = form.save(commit=False)
+                if 'image' in request.FILES:
+                    profile.image = request.FILES['image']
+                profile.save()
+                return redirect('profile_Interno')  # Redirigir a la misma vista o la que prefieras
+            except Exception as e:
+                logger.error(f"Error saving profile interno: {str(e)}")
+    else:
+        form = ProfileForm(instance=request.user.profile)
 
-    return render(request,'profileInterno.html')
+    return render(request, 'profileInterno.html', {'form': form})
+
 
 
 

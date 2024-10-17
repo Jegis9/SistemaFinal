@@ -5,7 +5,26 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from .forms import VEHForm
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
+
+from Aplicaciones.user.models import Profile
+
+# Funciones auxiliares para verificar permisos
+def is_admin(user):
+    return user.groups.filter(name='Administrador').exists()
+
+def is_staff(user):
+    return user.groups.filter(name='Personal').exists()
+def is_admin_or_staff(user):
+    return user.is_authenticated and (user.is_staff or user.groups.filter(name='Administrador').exists())
+
+
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def vehiculos(request):
     if request.method == 'POST':
         user = request.user  # Usuario en sesión
@@ -15,11 +34,12 @@ def vehiculos(request):
         Vehiculos.objects.create(user=user, placas=placas,  tipo_vehiculo=tipo_vehiculo)
         return redirect('vehiculos')
     
-    vehiculos_list = Vehiculos.objects.filter(user=request.user)  # Mostrar solo los vehículos del usuario en sesión
+    vehiculos_list = Vehiculos.objects.all()  # Mostrar solo los vehículos del usuario en sesión
     return render(request, 'vehiculos.html', {'vehiculos_list': vehiculos_list})
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def eliminar_vehiculo(request, vehiculo_id):
     vehiculo = get_object_or_404(Vehiculos, id=vehiculo_id)
     if request.method == 'POST':
@@ -30,8 +50,8 @@ def eliminar_vehiculo(request, vehiculo_id):
 
 
 
-
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def mantenimientoVehiculos(request, vehiculo_id):
     vehiculo = Vehiculos.objects.get(id=vehiculo_id)  # Asegurarse que el vehículo pertenezca al usuario
     if request.method == 'POST':
@@ -47,6 +67,7 @@ def mantenimientoVehiculos(request, vehiculo_id):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def lVehiculos(request):
     # Filtrar solo los vehículos que no han sido arreglados
     estados = Mantenimiento.objects.filter(estado=False)  
@@ -55,6 +76,7 @@ def lVehiculos(request):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def marcar_arreglado_vehiculo(request, vehiculo_id):
     estado = get_object_or_404(Mantenimiento, id=vehiculo_id)
     estado.estado = True  # Cambia el estado a "arreglado"
@@ -64,6 +86,7 @@ def marcar_arreglado_vehiculo(request, vehiculo_id):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def editar_vehiculos(request, codigo_vehiculo):
     vehiculo = get_object_or_404(Vehiculos, id=codigo_vehiculo)
     if request.method == 'POST':

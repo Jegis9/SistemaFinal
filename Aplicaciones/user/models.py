@@ -22,14 +22,5 @@ class Profile(models.Model):
     image = models.ImageField(default='images_1.jpg', upload_to='Profile_images')
 
 
-# cuando el usuario es creado en esta parte se asegura que el perfil es creado con su respectivo perfil
-@receiver(post_save, sender=User) # primero se crea el perfil segun el usuario 
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User) # y aqui se guarda el perfil que se creo segun el usuario relacion
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
 
 

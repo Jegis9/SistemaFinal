@@ -1,36 +1,11 @@
 from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from .forms import CVForm
-from .models import CV, Experiencia, Certificado
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.units import cm
-# tu_app/views.py
-from django.contrib.auth.decorators import login_required
+
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseForbidden
 from .models import CV, Experiencia, Certificado
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.units import cm
-from reportlab.lib.pagesizes import A4
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import cm
-from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_CENTER, TA_LEFT
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseForbidden
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
@@ -40,13 +15,42 @@ from reportlab.platypus import (
 )
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
+from django.contrib import messages
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
+from Aplicaciones.user.models import Profile
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
 
+from Aplicaciones.user.models import Profile
+
+# Funciones auxiliares para verificar permisos
+def is_admin(user):
+    return user.groups.filter(name='Administrador').exists()
+
+def is_staff(user):
+    return user.groups.filter(name='Personal').exists()
+def is_admin_or_staff(user):
+    return user.is_authenticated and (user.is_staff or user.groups.filter(name='Administrador').exists())
+# Funciones auxiliares para verificar permisos
+def is_admin(user):
+    return user.groups.filter(name='Administrador').exists()
+
+def is_staff(user):
+    return user.groups.filter(name='Personal').exists()
+
+
+@login_required
+@user_passes_test(is_admin, login_url='error')
 def prueba2(request):
     object_list = User.objects.filter(profile__is_internal=True, cv__isnull=False).select_related('profile', 'cv')
     return render(request, 'prueba2.html', {"object_list": object_list})
  
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def editar_cv(request):
     cv_instance, created = CV.objects.get_or_create(user=request.user)
     if request.method == 'POST':
@@ -60,6 +64,7 @@ def editar_cv(request):
 from .forms import ExperienciaForm
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def agregar_experiencia(request):
     cv_instance, created = CV.objects.get_or_create(user=request.user)
     if request.method == 'POST':
@@ -74,6 +79,7 @@ def agregar_experiencia(request):
     return render(request, 'agregar_experiencia.html', {'form': form})
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def editar_experiencia(request, experiencia_id):
     experiencia = get_object_or_404(Experiencia, id=experiencia_id, cv__user=request.user)
     if request.method == 'POST':
@@ -86,6 +92,7 @@ def editar_experiencia(request, experiencia_id):
     return render(request, 'editar_experiencia.html', {'form': form})
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def eliminar_experiencia(request, experiencia_id):
     experiencia = get_object_or_404(Experiencia, id=experiencia_id, cv__user=request.user)
     if request.method == 'POST':
@@ -95,6 +102,7 @@ def eliminar_experiencia(request, experiencia_id):
 from .forms import CertificadoForm
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def agregar_certificado(request):
     cv_instance, created = CV.objects.get_or_create(user=request.user)
     if request.method == 'POST':
@@ -109,6 +117,7 @@ def agregar_certificado(request):
     return render(request, 'agregar_certificado.html', {'form': form})
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def editar_certificado(request, certificado_id):
     certificado = get_object_or_404(Certificado, id=certificado_id, cv__user=request.user)
     if request.method == 'POST':
@@ -121,13 +130,17 @@ def editar_certificado(request, certificado_id):
     return render(request, 'editar_certificado.html', {'form': form})
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def eliminar_certificado(request, certificado_id):
     certificado = get_object_or_404(Certificado, id=certificado_id, cv__user=request.user)
     if request.method == 'POST':
         certificado.delete()
         return redirect('perfil')
     return render(request, 'eliminar_certificado.html', {'certificado': certificado})
+
+
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def perfil(request):
     cv_instance, created = CV.objects.get_or_create(user=request.user)
     experiencias = cv_instance.experiencias.all()
@@ -142,6 +155,7 @@ def perfil(request):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def generar_cv_reportlab_individual(request):
     # Obtener el CV del usuario
     cv_instance, created = CV.objects.get_or_create(user=request.user)
@@ -254,13 +268,14 @@ def generar_cv_reportlab_individual(request):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def generar_cv_reportlab_platypus(request, user_id):
     # Obtener el usuario específico que es interno
     user_profile = get_object_or_404(User, id=user_id, profile__is_internal=True)
 
-    # Permitir solo al propietario del CV o a usuarios con permisos especiales (por ejemplo, staff) generar el PDF
-    if request.user != user_profile and not request.user.is_staff:
-        return HttpResponseForbidden("No tienes permiso para generar este CV.")
+    # # Permitir solo al propietario del CV o a usuarios con permisos especiales (por ejemplo, staff) generar el PDF
+    # if request.user != user_profile and not request.user.is_staff:
+    #     return HttpResponseForbidden("No tienes permiso para generar este CV.")
 
     # Obtener o crear el CV asociado al usuario
     cv_instance, created = CV.objects.get_or_create(user=user_profile)
@@ -417,12 +432,14 @@ def generar_cv_reportlab_platypus(request, user_id):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def prueba(request):
     users_with_cv = User.objects.filter(profile__is_internal=True, cv__isnull=False).select_related('profile', 'cv')
     return render(request, 'prueba.html', {"object_list": users_with_cv})
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def perfil_cv(request, user_id):
     # Obtener el usuario específico que es interno
     user_profile = get_object_or_404(User, id=user_id, profile__is_internal=True)

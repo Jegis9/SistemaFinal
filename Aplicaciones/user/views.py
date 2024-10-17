@@ -9,7 +9,25 @@ from django.views import View
 from django.contrib import messages
 from .models import Profile
 from django.contrib.auth import logout
-# Create your views here.
+# views.py
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
+from .models import Profile
+
+
+def error(request):
+    return render(request,'error.html')
+
+# Funciones auxiliares para verificar permisos
+def is_admin(user):
+    return user.groups.filter(name='Administrador').exists()
+
+def is_staff(user):
+    return user.groups.filter(name='Personal').exists()
+
 
 # crear vista para que redirija a index que es la pagina principal
 def landingPage(request):
@@ -31,26 +49,42 @@ def register(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
             try:
-                profile = user.profile
-            except Profile.DoesNotExist:
-                profile = Profile(user=user)
-            
-            profile.is_internal = False
-            profile.pdi = form.cleaned_data.get('pdi')
-            profile.name1 = form.cleaned_data['name1']
-            profile.name2 = form.cleaned_data.get('name2', '')
-            profile.lastname1 = form.cleaned_data['lastname1']
-            profile.lastname2 = form.cleaned_data.get('lastname2', '')
-            profile.birthday = form.cleaned_data['birthday']  # Fixed spelling
-            profile.phone = form.cleaned_data.get('phone', '')
-            profile.municipio = form.cleaned_data.get('municipio', '')
-            profile.direccion = form.cleaned_data.get('direccion', '')
-            profile.gender = form.cleaned_data['gender']
-            profile.save()
-            
-            messages.success(request, 'Nuevo usuario agregado correctamente')
+                # Crear usuario
+                user = form.save(commit=False)
+                user.email = form.cleaned_data['email']
+                user.save()
+
+                # Asignar rol
+                # Asignar rol
+                # role = form.cleaned_data.get('role', 'public')  # Valor por defecto "public"
+                # group_name = 'Administrador' if role == 'admin' else 'Personal' if role == 'staff' else 'Publico'
+                # group = Group.objects.get(name=group_name)
+                # user.groups.add(group)
+
+
+                # Crear perfil
+                profile = Profile(
+                    user=user,
+                    is_internal=False,
+                    pdi=form.cleaned_data.get('pdi'),
+                    name1=form.cleaned_data['name1'],
+                    name2=form.cleaned_data.get('name2', ''),
+                    lastname1=form.cleaned_data['lastname1'],
+                    lastname2=form.cleaned_data.get('lastname2', ''),
+                    birthday=form.cleaned_data['birthday'],
+                    phone=form.cleaned_data.get('phone', ''),
+                    municipio=form.cleaned_data.get('municipio', ''),
+                    direccion=form.cleaned_data.get('direccion', ''),
+                    gender=form.cleaned_data['gender']
+                )
+                profile.save()
+
+                messages.success(request, 'Nuevo usuario agregado correctamente')
+                return redirect('lInternos')
+            except Exception as e:
+                messages.error(request, f'Error al crear el usuario: {str(e)}')
+                print(f"Error detallado: {str(e)}")
         else:
             print("Errores del formulario:", form.errors)
             print("Datos recibidos:", request.POST)
@@ -60,42 +94,58 @@ def register(request):
     context = {'form': form}
     return render(request, 'register.html', context)
 
+
+# Vista para crear usuarios (solo administradores)
+@login_required
+@user_passes_test(is_admin, login_url='error')
+
 def nuevo_registro(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
             try:
-                profile = user.profile
-            except Profile.DoesNotExist:
-                profile = Profile(user=user)
-            
-            profile.is_internal = True
-            profile.pdi = form.cleaned_data.get('pdi')
-            profile.name1 = form.cleaned_data['name1']
-            profile.name2 = form.cleaned_data.get('name2', '')
-            profile.lastname1 = form.cleaned_data['lastname1']
-            profile.lastname2 = form.cleaned_data.get('lastname2', '')
-            profile.birthday = form.cleaned_data['birthday']  # Fixed spelling
-            profile.phone = form.cleaned_data.get('phone', '')
-            profile.municipio = form.cleaned_data.get('municipio', '')
-            profile.direccion = form.cleaned_data.get('direccion', '')
-            profile.gender = form.cleaned_data['gender']
-            profile.save()
-            
-            messages.success(request, 'Nuevo usuario agregado correctamente')
-            return redirect('lInternos')
+                # Crear usuario
+                user = form.save(commit=False)
+                user.email = form.cleaned_data['email']
+                user.save()
+
+                # Asignar rol
+                role = form.cleaned_data.get('role')
+                group = Group.objects.get(
+                    name='Administrador' if role == 'admin' else 'Personal'
+                )
+                user.groups.add(group)
+
+                # Crear perfil
+                profile = Profile(
+                    user=user,
+                    is_internal=True,
+                    pdi=form.cleaned_data.get('pdi'),
+                    name1=form.cleaned_data['name1'],
+                    name2=form.cleaned_data.get('name2', ''),
+                    lastname1=form.cleaned_data['lastname1'],
+                    lastname2=form.cleaned_data.get('lastname2', ''),
+                    birthday=form.cleaned_data['birthday'],
+                    phone=form.cleaned_data.get('phone', ''),
+                    municipio=form.cleaned_data.get('municipio', ''),
+                    direccion=form.cleaned_data.get('direccion', ''),
+                    gender=form.cleaned_data['gender']
+                )
+                profile.save()
+
+                messages.success(request, 'Nuevo usuario agregado correctamente')
+                return redirect('lInternos')
+            except Exception as e:
+                messages.error(request, f'Error al crear el usuario: {str(e)}')
+                print(f"Error detallado: {str(e)}")
         else:
             print("Errores del formulario:", form.errors)
-    
+            messages.error(request, 'Error en el formulario. Por favor, verifica los datos.')
     else:
         form = CreateUserForm()
     
     context = {'formulario': form}
     return render(request, 'registerInternal.html', context)
-
-
-
 
 
 

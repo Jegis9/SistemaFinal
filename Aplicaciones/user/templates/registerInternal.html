@@ -260,6 +260,10 @@
               <div class="text-danger">{{ formulario.gender.errors }}</div>
               {% endif %}
             </div>
+            <div class="col-md-6">
+              <label for="{{ formulario.role.id_for_label }}">Rol:</label>
+              {{ formulario.role }}
+            </div>
           </div>
         </div>
 

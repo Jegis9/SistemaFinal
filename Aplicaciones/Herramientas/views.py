@@ -13,8 +13,25 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import HerramientasForm,MantenimientoForm
 # Create your views here.
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
+
+from Aplicaciones.user.models import Profile
+
+# Funciones auxiliares para verificar permisos
+def is_admin(user):
+    return user.groups.filter(name='Administrador').exists()
+
+def is_staff(user):
+    return user.groups.filter(name='Personal').exists()
+def is_admin_or_staff(user):
+    return user.is_authenticated and (user.is_staff or user.groups.filter(name='Administrador').exists())
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def herramienta(request):
     if request.method == 'POST':
         herramienta_id = request.POST.get('herramienta')
@@ -56,6 +73,8 @@ def herramienta(request):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
+
 def eliminar_herramienta(request, herramienta_id):
     herramienta = get_object_or_404(MantenimientoHerramienta, codigo=herramienta_id)
     if request.method == 'POST':
@@ -66,6 +85,7 @@ def eliminar_herramienta(request, herramienta_id):
 
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def estadoHerramienta(request, herramienta_id):
     if request.method == 'POST':
         descripcion = request.POST.get('descripcion')
@@ -87,6 +107,7 @@ def estadoHerramienta(request, herramienta_id):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def marcar_arreglado(request, codigo):
     estado = get_object_or_404(EstadoHerramienta, codigo=codigo)
     estado.estado = "Bueno"  # Cambia el estado a "arreglado"
@@ -94,7 +115,10 @@ def marcar_arreglado(request, codigo):
     messages.success(request, "La herramienta ha sido marcada como arreglada.")
     return redirect('lEHerramientas')  # Redirige de nuevo a la lista
 
+
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
+
 def lEHerramientas(request):
     estados = EstadoHerramienta.objects.filter(estado__in=["malo", "Malo"])  # Filtrar solo los estados no arreglados
     return render(request, 'lHerramientas.html', {"estados": estados})
@@ -103,6 +127,7 @@ def lEHerramientas(request):
 
  
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def listaHerramientas(request):
 
     her = Herramienta.objects.all()
@@ -110,6 +135,7 @@ def listaHerramientas(request):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def eliminar_Herramientas(request, codigo_her):
     her = get_object_or_404(Herramienta, codigo=codigo_her)
     if request.method == 'POST':
@@ -121,6 +147,7 @@ def eliminar_Herramientas(request, codigo_her):
 
 
 @login_required
+@user_passes_test(is_admin, login_url='error')
 def editar_Herramientas(request, codigo_her):
     her = get_object_or_404(Herramienta, codigo=codigo_her)
     if request.method == 'POST':
@@ -136,6 +163,7 @@ def editar_Herramientas(request, codigo_her):
 
 
 @login_required
+@user_passes_test(is_admin_or_staff, login_url='error')
 def editar_Mantenimeinto(request, codigo_mant):
     mant = get_object_or_404(MantenimientoHerramienta, codigo=codigo_mant)
     if request.method == 'POST':
