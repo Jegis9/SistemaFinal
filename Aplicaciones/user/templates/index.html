@@ -1,5 +1,94 @@
 {% extends 'baseLangind.html' %} {% load static %} {% block content%}
+<style>
+  .carousel-image {
+    height: 1000px; /* Define a fixed height for all images */
+    object-fit: cover; /* Ensures images cover the area without distortion */
+  }
 
+  @media (max-width: 768px) {
+    .carousel-image {
+      height: 300px; /* Adjust height for smaller screens */
+    }
+  }
+  .carousel-overlay {
+    position: relative;
+  }
+
+  .carousel-overlay img {
+    width: 100%;
+    height: auto;
+  }
+
+  .carousel-overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Fondo oscuro semitransparente */
+  }
+  .carousel-caption {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%; /* Abarca el 70% del ancho de la imagen */
+    height: 70%; /* Abarca el 70% de la altura de la imagen */
+    color: white;
+    z-index: 2;
+    text-align: justify;
+    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .carousel-caption h5 {
+    font-size: 3vw; /* Tamaño de fuente relativo al ancho de la ventana */
+    margin-bottom: 10px;
+  }
+
+  .carousel-caption p {
+    font-size: 1vw; /* Ajusta el tamaño del párrafo */
+    margin-top: 10px;
+    margin-bottom: 1px;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-caption {
+      width: 80%; /* Aumenta el ancho del texto en pantallas pequeñas */
+      height: 60%; /* Reduce la altura del contenedor de texto */
+      padding: 20px; /* Reduce el padding */
+    }
+
+    .carousel-caption h5 {
+      font-size: 5vw; /* Tamaño más grande en pantallas pequeñas */
+    }
+
+    .carousel-caption p {
+      font-size: 1vw; /* Ajustar el párrafo */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .carousel-caption {
+      width: 90%; /* Aumenta aún más el ancho en pantallas muy pequeñas */
+      height: 50%; /* Reduce la altura del contenedor de texto */
+      padding: 15px; /* Reduce el padding */
+    }
+
+    .carousel-caption h5 {
+      font-size: 5vw; /* Ajuste adicional para pantallas muy pequeñas */
+    }
+
+    .carousel-caption p {
+      font-size: 1vw; /* Ajuste adicional para pantallas muy pequeñas */
+    }
+  }
+</style>
 <div
   id="carouselExampleInterval"
   class="carousel slide"
@@ -7,68 +96,44 @@
 >
   <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="10000">
-      <img
-        src="{% static 'img/equipo.jpeg' %}"
-        class="d-block w-100 carousel-image"
-        alt="..."
-      />
-      <div class="carousel-caption d-none d-md-block">
-        <h5 class="text-light fs-5">Título de la Imagen 1</h5>
-        <p>Descripción o mensaje para la imagen 1.</p>
-      </div>
-    </div>
-    <div class="carousel-item" data-bs-interval="10000">
-      <img
-        src="{% static 'img/entrenamiento.jpg' %}"
-        class="d-block w-100 carousel-image"
-        alt="..."
-      />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Título de la Imagen 2</h5>
-        <p>Descripción o mensaje para la imagen 2.</p>
-      </div>
-    </div>
-    <div class="carousel-item" data-bs-interval="10000">
-      <img
-        src="{% static 'img/equipo2.jpg' %}"
-        class="d-block w-100 carousel-image"
-        alt="..."
-      />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Título de la Imagen 3</h5>
-        <p>Descripción o mensaje para la imagen 3.</p>
-      </div>
-    </div>
-    <div class="carousel-item" data-bs-interval="10000">
-      <img
-        src="{% static 'img/ambulancia.jpg' %}"
-        class="d-block w-100 carousel-image"
-        alt="..."
-      />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Título de la Imagen 4</h5>
-        <p>Descripción o mensaje para la imagen 4.</p>
+      <div class="carousel-overlay">
+        <img
+          src="{% static 'img/equipo.jpeg' %}"
+          class="d-block w-100 carousel-image"
+          alt="..."
+        />
+        <div class="carousel-caption d-md-block">
+          <h5 style="text-align: center">Tu apoyo puede salvar vidas</h5>
+          <p>
+            <strong>Querida comunidad,</strong> <br />
+            En los Bomberos Municipales, nuestra misión es proteger y servir en
+            momentos de emergencia, y cada día nos esforzamos por estar listos
+            para cuando más se nos necesita. Sin embargo, nuestra labor no sería
+            posible sin el apoyo de personas como tú. Hoy te invitamos a ser
+            parte de nuestra misión con una donación que nos ayudará a continuar
+            salvando vidas y brindando auxilio a quienes más lo necesitan.
+            <br />Tus aportes serán destinados a: <br />🚒
+            <strong>Equipamiento de emergencia:</strong> para mantener nuestras
+            unidades y equipos en condiciones óptimas. <br />
+            💉 <strong>Formación y capacitación:</strong> para que nuestro
+            personal siga preparado para responder ante cualquier situación.
+            <br />
+            🏥 <strong>Servicios médicos y de rescate:</strong> para seguir
+            brindando asistencia rápida y eficaz en cada llamada. <br />
+            Cada donación, sin importar su tamaño, marca una gran diferencia en
+            nuestra capacidad de actuar con rapidez y eficiencia. <br />
+            Te invitamos a unirte a nuestra causa con el corazón y la
+            solidaridad que nos caracteriza como comunidad. Haz tu donación hoy
+            y ayuda a salvar vidas. <br />
+            <strong
+              >Gracias por tu apoyo, Bomberos Municipales Siempre al servicio de
+              la comunidad.</strong
+            >
+          </p>
+        </div>
       </div>
     </div>
   </div>
-  <button
-    class="carousel-control-prev"
-    type="button"
-    data-bs-target="#carouselExampleInterval"
-    data-bs-slide="prev"
-  >
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button
-    class="carousel-control-next"
-    type="button"
-    data-bs-target="#carouselExampleInterval"
-    data-bs-slide="next"
-  >
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
 
 <div
@@ -83,7 +148,7 @@
         </div>
         <div class="card-body">
           <p class="card-text text-center">
-            <span class="fw-bold">Números de teléfono:</span> <br />
+            <span class="fw-bold">Números de emergencia:</span> <br />
             40261783 - 77665152
           </p>
         </div>
@@ -113,7 +178,7 @@
           <p class="card-text text-center">
             <span class="fw-bold">Correo electronico</span>
             <br />
-            BMToto@gmail.com
+            bomberosmunicipalestotonicapan@gmail.com
           </p>
         </div>
       </div>
@@ -223,24 +288,22 @@
 <div
   class="container border border-success rounded shadow p-3 mt-5 containerInfo mb-5"
 >
-  <h2 class="text-center">Nuestra ubicacion</h2>
+  <h2 class="text-center">Nuestra ubicación</h2>
 
   <div class="container mt-5">
     <div class="d-flex flex-wrap justify-content-center">
-      <div class="m-3" style="width: 18rem">
+      <!-- Mapa responsive -->
+      <div class="m-3 w-100" style="max-width: 100%">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3855.4621375277084!2d-91.365514523937!3d14.911324569391862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x858eaf7aa47ef8bf%3A0xafaef86e580f6cd3!2sBomberos%20Municipales%20Totonicap%C3%A1n!5e0!3m2!1ses-419!2sgt!4v1721800137560!5m2!1ses-419!2sgt"
-          width="600"
+          width="100%"
           height="450"
           style="border: 0"
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          class="border rounded shadow p-3"
+          class="border rounded shadow p-3 map-responsive"
         ></iframe>
-      </div>
-      <div class="m-3" style="width: 18rem">
-        <div class=""></div>
       </div>
     </div>
   </div>

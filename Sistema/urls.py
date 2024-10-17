@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views #importacion de librerias para login y logout de cada usuario en cada una de sus vistas
 
+from django.conf.urls import handler404, handler500
+from Aplicaciones.Administrativo.views import errores
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Aplicaciones.Administrativo.urls')),
@@ -40,3 +43,7 @@ urlpatterns = [
  
     
 ]
+handler404 = errores
+
+# Registrar el manejo de errores
+handler500 = errores

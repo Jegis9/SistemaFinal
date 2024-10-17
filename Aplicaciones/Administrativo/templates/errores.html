@@ -1,0 +1,63 @@
+{% load static %}
+<style>
+  @mixin lips($num) {
+    @for $i from 1 through $num {
+      &:nth-child(n + #{$i + 1}) {
+        margin-left: #{$i * 31px};
+      }
+    }
+  }
+
+  body {
+    height: 100vh;
+    background-image: radial-gradient(closest-side, #2ea3f2, #2874b8);
+    text-align: center;
+    color: #fff;
+    font-family: "Helvetica Neue";
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .logo {
+    margin: 40px auto;
+    display: block;
+  }
+
+  h1 {
+    font-size: 24px;
+    line-height: 40px;
+    margin: 0 auto 16px;
+    padding: 0 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    max-width: 600px;
+  }
+
+  h2 {
+    color: #d6dce0;
+    font-weight: 300;
+    max-width: 600px;
+    margin: 0 auto 24px;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+    padding: 0 20px;
+    a {
+      color: inherit;
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+  .img-responsive {
+    max-width: 100%; /* La imagen no será más grande que el contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block; /* Elimina el espacio en línea debajo de la imagen */
+    margin: 0 auto; /* Centra la imagen horizontalmente si es necesario */
+  }
+</style>
+
+<img src="{% static 'img/404.png' %}" alt="Error 404" class="img-responsive" />
+
+<h1>Oh no, algo salio mal!!</h1>
+<h2>Intenta cargar de nuevo la pagina</h2>

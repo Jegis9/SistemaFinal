@@ -17,6 +17,7 @@ urlpatterns = [
     path('edicionInsumo/<codigo>', views.edicionInsumo),
     path('editarInsumo/', views.editarInsumo),
     path('eliminacionInsumo/<codigo>', views.eliminacionInsumo),
+    path('eliminacionInsumo/<codigo>', views.eliminacionInsumo),
     
-
+    path('errores/', views.errores, name='errores')
 ]

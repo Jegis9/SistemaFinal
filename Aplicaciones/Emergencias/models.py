@@ -40,30 +40,14 @@ class Varios(models.Model):
     def __str__(self):
         return f"Varios - {self.servicio}"
 
+class Categorias_emergencias(models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    
 
 class Ambulancia(models.Model):
-    EMERGENCY_CATEGORIES = [
-        # A - Servicios de ambulancia
-        ('A1.1', 'A - Servicios de ambulancia - 1. Heridos - 1.1 Arma de fuego'),
-        ('A1.2', 'A - Servicios de ambulancia - 1. Heridos - 1.2 Arma blanca'),
-        ('A2.1', 'A - Servicios de ambulancia - 2. Accidentes - 2.1 De tránsito'),
-        ('A2.2', 'A - Servicios de ambulancia - 2. Accidentes - 2.2 Laborales'),
-        ('A3.1', 'A - Servicios de ambulancia - 3. Atropellados - 3.1 Por vehículos no identificados'),
-        ('A3.2', 'A - Servicios de ambulancia - 3. Atropellados - 3.2 Por vehículos livianos identificados'),
-        
-        # B - Rescates
-        ('B17.1', 'B - Rescates - 17. Rescate de personas con vida - 17.1 Accidentes aéreos'),
-        
-        # Puedes seguir agregando más opciones aquí hasta la H
-    ]
+
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='ambulancia')
-    codigo_emergencia = models.CharField(
-        max_length=10,
-        choices=EMERGENCY_CATEGORIES,
-        blank=True,
-        help_text="Seleccione el tipo de emergencia",
-        db_index=True
-    )
+    codigo_emergencia = models.ForeignKey(Categorias_emergencias, on_delete=models.CASCADE, related_name='Categorias', null=True, blank=True)
     nombre_paciente = models.CharField(max_length=100)
     direccion_paciente = models.CharField(max_length=255)
     edad = models.PositiveIntegerField()

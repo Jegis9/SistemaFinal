@@ -11,6 +11,17 @@ from django.contrib import messages
 from django.views import View
 
 
+
+
+
+def errores(request, exception=None):
+    return render(request, 'errores.html', status=404)
+
+def error_500(request):
+    return render(request, '500.html', status=500)
+
+
+
 # Create your views here.
 @login_required
 def home(request):

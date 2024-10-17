@@ -3,7 +3,7 @@
 # your_app/forms.py
 
 from django import forms
-from .models import Servicio, Varios, Ambulancia, Incendios
+from .models import Servicio, Varios, Ambulancia, Incendios, Categorias_emergencias
 
 class ServicioForm(forms.ModelForm):
     class Meta:
@@ -46,8 +46,8 @@ class VariosForm(forms.ModelForm):
         fields = ['fecha', 'servicio_de', 'jefe_servicio', 'servicio_autorizado_por']
 
 class AmbulanciaForm(forms.ModelForm):
-    codigo_emergencia = forms.ChoiceField(
-        choices=Ambulancia.EMERGENCY_CATEGORIES,
+    codigo_emergencia = forms.ModelChoiceField(
+        queryset=Categorias_emergencias.objects.all(),
         required=False,
         widget=forms.Select(attrs={'placeholder': 'Código de Emergencia'})
     )
