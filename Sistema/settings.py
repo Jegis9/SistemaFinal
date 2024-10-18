@@ -153,17 +153,20 @@ LOGIN_URL = '/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT='587'
-EMAIL_USE_TLS='True'
-EMAIL_HOST_USER ='bomberosmunicipalestotonicapan@gmail.com'
-EMAIL_HOST_PASSWORD ='vbktnespuvinqdwj'
+EMAIL_BACKEND=config('EMAIL_BACKEND')
+EMAIL_HOST=config('EMAIL_HOST')
+EMAIL_PORT=config('EMAIL_PORT')
+EMAIL_USE_TLS=config('EMAIL_USE_TLS')
+EMAIL_HOST_USER =config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD =config('EMAIL_HOST_PASSWORD')
 
+CLOUNDNAME=config('CLOUND_NAME')
+APIKEY=config('API_KEY')
+APISECRET=config('API_SECRET')
 
 cloudinary.config( 
-    cloud_name = "ddnop34xh",
-    api_key = "588949975792429",
-    api_secret = "ViyM4FHyarHpDFdFa5uAg2jFCyk"
+    cloud_name = CLOUNDNAME,
+    api_key = APIKEY,
+    api_secret = APISECRET
 )
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

@@ -9,6 +9,9 @@
           <h1 class="text-center encabezado text-white">
             Bienvenido {{user.username |upper}}
           </h1>
+          <a href="{% url 'edit_profile' %}" class="btn btn-primary"
+            >Editar perfil</a
+          >
           <div class="row m-l-0 m-r-0">
             <div class="col-sm-4 bg-c-lite-green user-profile">
               <div class="card-block text-center text-white">
