@@ -26,11 +26,14 @@ import cloudinary.api
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-4owuhm&j()3vrd^*kvyb_vc#78h24g_b1uk&0h%oo35llvg8p='
-SECRET_KEY = 'django-insecure-4owuhm&j()3vrd^*kvyb_vc#78h24g_b1uk&0h%oo35llvg8p='
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+# DEBUG = os.environ.get("DEBUG","False".lower()) == "True"
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(' ')
 
 
 # Application definition
