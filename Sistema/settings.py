@@ -14,10 +14,13 @@ from pathlib import Path
 import os
 from .bd import MYSQL
 from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -55,7 +58,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'requests',
-    'storages'
+    'storages',
+    'cloudinary', 
+   
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
@@ -136,7 +141,8 @@ STATIC_URL = 'static/'
 
 # Archivos multimedia
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #Cuando el usuario se autentique lo redigira a home (provisional hasta ahora)
 # LOGIN_REDIRECT_URL = 'home'
@@ -153,3 +159,11 @@ EMAIL_PORT='587'
 EMAIL_USE_TLS='True'
 EMAIL_HOST_USER ='bomberosmunicipalestotonicapan@gmail.com'
 EMAIL_HOST_PASSWORD ='vbktnespuvinqdwj'
+
+
+cloudinary.config( 
+    cloud_name = "ddnop34xh",
+    api_key = "588949975792429",
+    api_secret = "ViyM4FHyarHpDFdFa5uAg2jFCyk"
+)
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

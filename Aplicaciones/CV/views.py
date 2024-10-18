@@ -155,7 +155,7 @@ def perfil(request):
 
 
 @login_required
-@user_passes_test(is_admin, login_url='error')
+@user_passes_test(is_admin_or_staff, login_url='error')
 def generar_cv_reportlab_individual(request):
     # Obtener el CV del usuario
     cv_instance, created = CV.objects.get_or_create(user=request.user)
@@ -192,7 +192,7 @@ def generar_cv_reportlab_individual(request):
     personal_data = []
     # Añadir imagen del perfil si existe
     if hasattr(request.user, 'profile') and request.user.profile.image:
-        image_path = request.user.profile.image.path
+        image_path = request.user.profile.image.url
         img = Image(image_path, width=4*cm, height=4*cm)
         img.hAlign = 'LEFT'
     else:
@@ -351,7 +351,7 @@ def generar_cv_reportlab_platypus(request, user_id):
     personal_data = []
     # Añadir imagen del perfil si existe
     if hasattr(user_profile, 'profile') and user_profile.profile.image:
-        image_path = user_profile.profile.image.path
+        image_path = request.user.profile.image.url
         try:
             img = Image(image_path, width=4*cm, height=4*cm)
             img.hAlign = 'LEFT'

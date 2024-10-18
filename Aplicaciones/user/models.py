@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from cloudinary.models import CloudinaryField
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     pdi = models.IntegerField(null=True, blank=True)  
@@ -19,7 +19,8 @@ class Profile(models.Model):
     direccion = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=1, choices=[('M', 'Masculino'), ('F', 'Femenino')], default='M')
     is_internal = models.BooleanField(default=False)
-    image = models.ImageField(default='images_1.jpg', upload_to='Profile_images')
+    image = CloudinaryField('image', default='images_1.jpg') 
+    # image = models.ImageField(default='images_1.jpg', upload_to='profile-image')
 
 
 
