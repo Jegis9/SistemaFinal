@@ -41,6 +41,23 @@ def logout_view(request):
     logout(request)
     return render(request, 'logout_sale.html')
 
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Profile
+from .forms import ProfileForm
+
+def edit_profile(request):
+    profile = get_object_or_404(Profile, user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirige a una página de perfil o cualquier página que prefieras
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'edit_profile.html', {'form': form})
+
 
 
 

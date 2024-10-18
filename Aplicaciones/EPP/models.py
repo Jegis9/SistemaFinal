@@ -5,11 +5,13 @@ from django.utils import timezone
 class Epp(models.Model):
     codigo=models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
-
+    def __str__(self):
+        return self.nombre
 class PersonalEpps(models.Model):
     idPersonal = models.ForeignKey(User, on_delete=models.CASCADE)
     idEpp = models.ForeignKey(Epp, on_delete=models.CASCADE)
-
+    def __str__(self):
+        return self.nombre
 class EstadoEPP(models.Model):
     codigo=models.AutoField(primary_key=True)
     PersonalEpps = models.ForeignKey(PersonalEpps, on_delete=models.CASCADE)

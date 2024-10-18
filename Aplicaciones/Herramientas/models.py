@@ -8,7 +8,8 @@ from django.utils import timezone
 class Herramienta(models.Model):
     codigo = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
-
+    def __str__(self):
+        return self.nombre
 class MantenimientoHerramienta(models.Model):
     codigo = models.AutoField(primary_key=True)
     herramienta = models.ForeignKey(Herramienta, on_delete=models.CASCADE)

@@ -83,3 +83,10 @@ class CreateUserForm(UserCreationForm):
                  'phone', 'municipio', 'direccion', 'gender', 'is_internal']
         
         
+from django import forms
+from .models import Profile
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['pdi', 'name1', 'name2', 'lastname1', 'lastname2', 'birthday', 'phone', 'municipio', 'direccion', 'gender',  'image']
