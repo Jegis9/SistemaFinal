@@ -1,13 +1,18 @@
 from decouple import config
+NAMEBD=config('NAME')
+USERDB=config('USER')
+PASSWORDDB=config('PASSWORD')
+HOSTBD=config('HOST')
+
 
 MYSQL = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('NAME'),
-        'USER': config('USER'),
-        'PASSWORD': config('PASSWORD'),
-        'HOST': config('HOST'),
-        'PORT': config('PORT', default='3306'),  # Puedes establecer un valor por defecto
+        'NAME': NAMEBD,
+        'USER': USERDB,
+        'PASSWORD': PASSWORDDB,
+        'HOST': HOSTBD,
+        'PORT': '3306',  # Puedes establecer un valor por defecto
     }
 }
 
