@@ -119,6 +119,15 @@ def listar_categorias(request):
     categorias = Categorias_emergencias.objects.all()
     return render(request, 'listar.html', {'categorias': categorias})
 
+# agregar categorias
+# Vista para listar todas las categorías
+def categorias_list_view(request):
+    categorias = Categorias_emergencias.get.all()
+    return render(request, 'listar_categorias.html', {'categorias': categorias})
+
+
+
+
 # Vista para crear una nueva categoría
 def crear_categoria(request):
     if request.method == 'POST':
