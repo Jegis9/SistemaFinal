@@ -70,7 +70,7 @@ def edit_profile_externo(request):
     else:
         form = ProfileForm(instance=profile)
 
-    return render(request, 'edit_profile_externo.html', {'form': form})
+    return render(request, 'editar_profile_externo.html', {'form': form})
 
 
 
