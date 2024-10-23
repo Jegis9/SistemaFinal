@@ -95,96 +95,59 @@
                     <h6>Información General</h6>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Estación:</strong></label
+                        ><strong>Estación:</strong> {{
+                        ambulancias.servicio.estacion }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.estacion }}"
-                        readonly
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"><strong>Turno:</strong></label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.turno }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Dirección:</strong></label
+                        ><strong>Turno:</strong> {{ ambulancias.servicio.turno
+                        }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.direccion }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Telefonista:</strong></label
+                        ><strong>Dirección:</strong> {{
+                        ambulancias.servicio.direccion }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.telefonista }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Bombero Reporta:</strong></label
+                        ><strong>Telefonista:</strong> {{
+                        ambulancias.servicio.telefonista }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.bombero_reporta }}"
-                        readonly
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"><strong>Unidad:</strong></label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.unidad }}"
-                        readonly
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"><strong>Piloto:</strong></label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.piloto }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Hora Salida:</strong></label
+                        ><strong>Bombero Reporta:</strong> {{
+                        ambulancias.servicio.bombero_reporta }}</label
                       >
-                      <input
-                        type="datetime-local"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.salida_hora|date:'Y-m-d\\TH:i' }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Hora Entrada:</strong></label
+                        ><strong>Unidad:</strong> {{ ambulancias.servicio.unidad
+                        }}</label
                       >
-                      <input
-                        type="datetime-local"
-                        class="form-control"
-                        value="{{ ambulancias.servicio.entrada_hora|date:'Y-m-d\\TH:i' }}"
-                        readonly
-                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Piloto:</strong> {{ ambulancias.servicio.piloto
+                        }}</label
+                      >
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Hora Salida:</strong> {{
+                        ambulancias.servicio.salida_hora|date:'Y-m-d\\TH:i'
+                        }}</label
+                      >
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Hora Entrada:</strong> {{
+                        ambulancias.servicio.entrada_hora|date:'Y-m-d\\TH:i'
+                        }}</label
+                      >
                     </div>
                   </div>
                   <!-- Información Específica de Ambulancia -->
@@ -192,87 +155,49 @@
                     <h6>Detalles de Ambulancia</h6>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Código de Emergencia:</strong></label
+                        ><strong>Código de Emergencia:</strong> {{
+                        ambulancias.codigo_emergencia }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.codigo_emergencia }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Nombre del Paciente:</strong></label
+                        ><strong>Nombre del Paciente:</strong> {{
+                        ambulancias.nombre_paciente }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.nombre_paciente }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Dirección del Paciente:</strong></label
+                        ><strong>Dirección del Paciente:</strong> {{
+                        ambulancias.direccion_paciente }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.direccion_paciente }}"
-                        readonly
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"><strong>Edad:</strong></label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        value="{{ ambulancias.edad }}"
-                        readonly
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"><strong>Sexo:</strong></label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.sexo }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Traslado a:</strong></label
+                        ><strong>Edad:</strong> {{ ambulancias.edad }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.traslado_a }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Forma de Aviso:</strong></label
+                        ><strong>Sexo:</strong> {{ ambulancias.sexo }}</label
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="{{ ambulancias.forma_aviso }}"
-                        readonly
-                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Hora Efectiva del Servicio:</strong></label
+                        ><strong>Traslado a:</strong> {{ ambulancias.traslado_a
+                        }}</label
                       >
-                      <input
-                        type="time-local"
-                        class="form-control"
-                        value="{{ ambulancias.hora_efectiva_servicio|time:'TH:i' }}"
-                        readonly
-                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Forma de Aviso:</strong> {{
+                        ambulancias.forma_aviso }}</label
+                      >
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Hora Efectiva del Servicio:</strong> {{
+                        ambulancias.hora_efectiva_servicio|time:'TH:i' }}</label
+                      >
                     </div>
                   </div>
                 </div>
@@ -281,9 +206,7 @@
                   <label class="form-label"
                     ><strong>Observaciones:</strong></label
                   >
-                  <textarea class="form-control" rows="3" readonly>
-{{ ambulancias.servicio.observaciones }}</textarea
-                  >
+                  <p>{{ ambulancias.servicio.observaciones }}</p>
                 </div>
               </form>
             </div>
