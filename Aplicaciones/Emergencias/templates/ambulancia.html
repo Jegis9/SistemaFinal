@@ -95,58 +95,56 @@
                     <h6>Información General</h6>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Estación:</strong> {{
-                        ambulancias.servicio.estacion }}</label
+                        ><strong>Estación:</strong>
+                        {{ambulancias.servicio.estacion}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Turno:</strong> {{ ambulancias.servicio.turno
-                        }}</label
+                        ><strong>Turno:</strong>
+                        {{ambulancias.servicio.turno}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Dirección:</strong> {{
-                        ambulancias.servicio.direccion }}</label
+                        ><strong>Dirección:</strong>
+                        {{ambulancias.servicio.direccion}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Telefonista:</strong> {{
-                        ambulancias.servicio.telefonista }}</label
+                        ><strong>Telefonista:</strong>
+                        {{ambulancias.servicio.telefonista}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Bombero Reporta:</strong> {{
-                        ambulancias.servicio.bombero_reporta }}</label
+                        ><strong>Bombero Reporta:</strong>
+                        {{ambulancias.servicio.bombero_reporta}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Unidad:</strong> {{ ambulancias.servicio.unidad
-                        }}</label
+                        ><strong>Unidad:</strong>
+                        {{ambulancias.servicio.unidad}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Piloto:</strong> {{ ambulancias.servicio.piloto
-                        }}</label
+                        ><strong>Piloto:</strong>
+                        {{ambulancias.servicio.piloto}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Hora Salida:</strong> {{
-                        ambulancias.servicio.salida_hora|date:'Y-m-d\\TH:i'
-                        }}</label
+                        ><strong>Hora Salida:</strong>
+                        {{ambulancias.servicio.salida_hora|date:'Y-m-d\\TH:i'}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Hora Entrada:</strong> {{
-                        ambulancias.servicio.entrada_hora|date:'Y-m-d\\TH:i'
-                        }}</label
+                        ><strong>Hora Entrada:</strong>
+                        {{ambulancias.servicio.entrada_hora|date:'Y-m-d\\TH:i'}}</label
                       >
                     </div>
                   </div>
@@ -155,20 +153,20 @@
                     <h6>Detalles de Ambulancia</h6>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Código de Emergencia:</strong> {{
-                        ambulancias.codigo_emergencia }}</label
+                        ><strong>Código de Emergencia:</strong>
+                        {{ambulancias.codigo_emergencia}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Nombre del Paciente:</strong> {{
-                        ambulancias.nombre_paciente }}</label
+                        ><strong>Nombre del Paciente:</strong>
+                        {{ambulancias.nombre_paciente}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Dirección del Paciente:</strong> {{
-                        ambulancias.direccion_paciente }}</label
+                        ><strong>Dirección del Paciente:</strong>
+                        {{ambulancias.direccion_paciente }}</label
                       >
                     </div>
                     <div class="mb-3">
@@ -183,21 +181,47 @@
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Traslado a:</strong> {{ ambulancias.traslado_a
-                        }}</label
+                        ><strong>Traslado a:</strong>
+                        {{ambulancias.traslado_a}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Forma de Aviso:</strong> {{
-                        ambulancias.forma_aviso }}</label
+                        ><strong>Forma de Aviso:</strong>
+                        {{ambulancias.forma_aviso }}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Hora Efectiva del Servicio:</strong> {{
-                        ambulancias.hora_efectiva_servicio|time:'TH:i' }}</label
-                      >
+                        ><strong>Hora Efectiva del Servicio:</strong>
+                        {{ambulancias.hora_efectiva_servicio|time:'TH:i'}}
+                      </label>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="mb-3">
+                        <label class="form-label"
+                          ><strong>Km entrada:</strong></label
+                        >
+                        <p>{{ ambulancias.servicio.km_entrada }}</p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="mb-3">
+                        <label class="form-label"
+                          ><strong>Km salida:</strong></label
+                        >
+                        <p>{{ ambulancias.servicio.km_salida }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="mb-3">
+                        <label class="form-label"
+                          ><strong>Km recorridos:</strong></label
+                        >
+                        <p>{{ ambulancias.servicio.km_recorridos }}</p>
+                      </div>
                     </div>
                   </div>
                 </div>

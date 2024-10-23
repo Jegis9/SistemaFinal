@@ -95,58 +95,54 @@
                     <h6>Información General</h6>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Estación:</strong> {{
-                        incendios.servicio.estacion }}</label
+                        ><strong>Estación:</strong>
+                        {{incendios.servicio.estacion }}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Turno:</strong> {{ incendios.servicio.turno
-                        }}</label
+                        ><strong>Turno:</strong>
+                        {{incendios.servicio.turno}}
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Dirección:</strong>
+                        {{incendios.servicio.direccion }}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Dirección:</strong> {{
-                        incendios.servicio.direccion }}</label
+                        ><strong>Telefonista:</strong>
+                        {{incendios.servicio.telefonista }}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Telefonista:</strong> {{
-                        incendios.servicio.telefonista }}</label
+                        ><strong>Bombero Reporta:</strong>
+                        {{incendios.servicio.bombero_reporta }}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Bombero Reporta:</strong> {{
-                        incendios.servicio.bombero_reporta }}</label
+                        ><strong>Unidad:</strong> {{incendios.servicio.unidad}}
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Piloto:</strong> {{incendios.servicio.piloto}}
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Hora Salida:</strong>
+                        {{incendios.servicio.salida_hora|date:'Y-m-d\\TH:i'}}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Unidad:</strong> {{ incendios.servicio.unidad
-                        }}</label
-                      >
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"
-                        ><strong>Piloto:</strong> {{ incendios.servicio.piloto
-                        }}</label
-                      >
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"
-                        ><strong>Hora Salida:</strong> {{
-                        incendios.servicio.salida_hora|date:'Y-m-d\\TH:i'
-                        }}</label
-                      >
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"
-                        ><strong>Hora Entrada:</strong> {{
-                        incendios.servicio.entrada_hora|date:'Y-m-d\\TH:i'
-                        }}</label
+                        ><strong>Hora Entrada:</strong>
+                        {{incendios.servicio.entrada_hora|date:'Y-m-d\\TH:i'}}</label
                       >
                     </div>
                   </div>
@@ -155,55 +151,78 @@
                     <h6>Detalles de Incendios</h6>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Servicio de:</strong> {{
-                        incendios.servicio_incendio_inmueble }}</label
+                        ><strong>Servicio de:</strong>
+                        {{incendios.servicio_incendio_inmueble }}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Jefe de Servicio:</strong> {{ incendios.valor
-                        }}</label
+                        ><strong>Jefe de Servicio:</strong> {{ incendios.valor}}
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Servicio Autorizado Por:</strong>
+                        {{incendios.perdida }}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Servicio Autorizado Por:</strong> {{
-                        incendios.perdida }}</label
+                        ><strong>Unidades Asistentes:</strong>
+                        {{incendios.unidades_asistentes_otras_estaciones}}
+                      </label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label"
+                        ><strong>Unidades Policiacas:</strong>
+                        {{incendios.unidades_policiacas }}</label
                       >
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Unidades Asistentes:</strong> {{
-                        incendios.unidades_asistentes_otras_estaciones }}</label
-                      >
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"
-                        ><strong>Unidades Policiacas:</strong> {{
-                        incendios.unidades_policiacas }}</label
-                      >
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label"
-                        ><strong>Otras Instituciones Bomberiles:</strong> {{
-                        incendios.unidades_otras_instituciones_bomberiles
-                        }}</label
-                      >
+                        ><strong>Otras Instituciones Bomberiles:</strong>
+                        {{incendios.unidades_otras_instituciones_bomberiles}}
+                      </label>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong
                           >Personal Asistente en Otras Estaciones:</strong
                         >
-                        {{ incendios.personal_asistente_otras_estaciones
-                        }}</label
-                      >
+                        {{ incendios.personal_asistente_otras_estaciones}}
+                      </label>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
-                        ><strong>Fecha:</strong> {{ incendios.fecha|date:'Y-m-d'
-                        }}</label
-                      >
+                        ><strong>Fecha:</strong>
+                        {{incendios.fecha|date:'Y-m-d'}}
+                      </label>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="mb-3">
+                        <label class="form-label"
+                          ><strong>Km entrada:</strong></label
+                        >
+                        <p>{{ incendios.servicio.km_entrada }}</p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="mb-3">
+                        <label class="form-label"
+                          ><strong>Km salida:</strong></label
+                        >
+                        <p>{{ incendios.servicio.km_salida }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="mb-3">
+                        <label class="form-label"
+                          ><strong>Km recorridos:</strong></label
+                        >
+                        <p>{{ incendios.servicio.km_recorridos }}</p>
+                      </div>
                     </div>
                   </div>
                 </div>

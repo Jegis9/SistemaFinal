@@ -105,79 +105,37 @@
                       <label class="form-label"
                         ><strong>Estación:</strong></label
                       >
-                      <input
-                        type="text"
-                        name="estacion"
-                        class="form-control"
-                        value="{{ varios.servicio.estacion }}"
-                        required
-                      />
+                      <p>{{ varios.servicio.estacion }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"><strong>Turno:</strong></label>
-                      <input
-                        type="text"
-                        name="turno"
-                        class="form-control"
-                        value="{{ varios.servicio.turno }}"
-                        required
-                      />
+                      <p>{{ varios.servicio.turno }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong>Dirección:</strong></label
                       >
-                      <input
-                        type="text"
-                        name="direccion"
-                        class="form-control"
-                        value="{{ varios.servicio.direccion }}"
-                        required
-                      />
+                      <p>{{ varios.servicio.direccion }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong>Telefonista:</strong></label
                       >
-                      <input
-                        type="text"
-                        name="telefonista"
-                        class="form-control"
-                        value="{{ varios.servicio.telefonista }}"
-                        required
-                      />
+                      <p>{{ varios.servicio.telefonista }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong>Bombero reporta:</strong></label
                       >
-                      <input
-                        type="text"
-                        name="bombero_reporta"
-                        class="form-control"
-                        value="{{ varios.servicio.bombero_reporta }}"
-                        required
-                      />
+                      <p>{{ varios.servicio.bombero_reporta }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"><strong>Unidad:</strong></label>
-                      <input
-                        type="text"
-                        name="unidad"
-                        class="form-control"
-                        value="{{ varios.servicio.unidad }}"
-                        required
-                      />
+                      <p>{{ varios.servicio.unidad }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"><strong>Piloto:</strong></label>
-                      <input
-                        type="text"
-                        name="piloto"
-                        class="form-control"
-                        value="{{ varios.servicio.piloto }}"
-                        required
-                      />
+                      <p>{{ varios.servicio.piloto }}</p>
                     </div>
                   </div>
                   <!-- Información Específica -->
@@ -185,73 +143,41 @@
                     <h6>Detalles de Varios</h6>
                     <div class="mb-3">
                       <label class="form-label"><strong>Piloto:</strong></label>
-                      <input
-                        type="text"
-                        name="piloto"
-                        class="form-control"
-                        value="{{ varios.servicio.piloto }}"
-                        required
-                      />
+                      <p>{{ varios.servicio.piloto }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong>Servicio de:</strong></label
                       >
-                      <input
-                        type="text"
-                        name="servicio_de"
-                        class="form-control"
-                        value="{{ varios.servicio_de }}"
-                        required
-                      />
+                      <p>{{ varios.servicio_de }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong>Jefe de servicio:</strong></label
                       >
-                      <input
-                        type="text"
-                        name="jefe_servicio"
-                        class="form-control"
-                        value="{{ varios.jefe_servicio }}"
-                        required
-                      />
+                      <p>{{ varios.jefe_servicio }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong>Servicio autorizado por:</strong></label
                       >
-                      <input
-                        type="text"
-                        name="servicio_autorizado_por"
-                        class="form-control"
-                        value="{{ varios.servicio_autorizado_por }}"
-                        required
-                      />
+                      <p>{{ varios.servicio_autorizado_por }}</p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong>Hora salida:</strong></label
                       >
-                      <input
-                        type="datetime-local"
-                        name="salida_hora"
-                        class="form-control"
-                        value="{{ varios.servicio.salida_hora|date:'Y-m-d\\TH:i' }}"
-                        required
-                      />
+                      <p>
+                        {{ varios.servicio.salida_hora|date:'Y-m-d\\TH:i' }}
+                      </p>
                     </div>
                     <div class="mb-3">
                       <label class="form-label"
                         ><strong>Hora entrada:</strong></label
                       >
-                      <input
-                        type="datetime-local"
-                        name="entrada_hora"
-                        class="form-control"
-                        value="{{ varios.servicio.entrada_hora|date:'Y-m-d\\TH:i' }}"
-                        required
-                      />
+                      <p>
+                        {{ varios.servicio.entrada_hora|date:'Y-m-d\\TH:i' }}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -265,13 +191,7 @@
                           <label class="form-label"
                             ><strong>Personal asistente:</strong></label
                           >
-                          <input
-                            type="text"
-                            name="personal_asistente"
-                            class="form-control"
-                            value="{{ varios.servicio.personal_asistente }}"
-                            required
-                          />
+                          <p>{{ varios.servicio.personal_asistente }}</p>
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -279,14 +199,7 @@
                           <label class="form-label"
                             ><strong>Km entrada:</strong></label
                           >
-                          <input
-                            type="number"
-                            step="0.01"
-                            name="km_entrada"
-                            class="form-control"
-                            value="{{ varios.servicio.km_entrada }}"
-                            required
-                          />
+                          <p>{{ varios.servicio.km_entrada }}</p>
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -294,14 +207,7 @@
                           <label class="form-label"
                             ><strong>Km salida:</strong></label
                           >
-                          <input
-                            type="number"
-                            step="0.01"
-                            name="km_salida"
-                            class="form-control"
-                            value="{{ varios.servicio.km_salida }}"
-                            required
-                          />
+                          <p>{{ varios.servicio.km_salida }}</p>
                         </div>
                       </div>
                     </div>
@@ -311,14 +217,7 @@
                           <label class="form-label"
                             ><strong>Km recorridos:</strong></label
                           >
-                          <input
-                            type="number"
-                            step="0.01"
-                            name="km_recorridos"
-                            class="form-control"
-                            value="{{ varios.servicio.km_recorridos }}"
-                            required
-                          />
+                          <p>{{ varios.servicio.km_recorridos }}</p>
                         </div>
                       </div>
                       <div class="col-md-8">
@@ -326,19 +225,14 @@
                           <label class="form-label"
                             ><strong>Observaciones:</strong></label
                           >
-                          <textarea
-                            name="observaciones"
-                            class="form-control"
-                            rows="3"
-                          >
-{{ varios.servicio.observaciones }}</textarea
-                          >
+                          <p>{{ varios.servicio.observaciones }}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="modal-footer">
                 <a
                   href="{% url 'generar_reporte_varios' varios.id %}"

@@ -11,7 +11,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import A4
 from .models import Ambulancia
 from django.contrib import messages
-from .models import Servicio, Varios, Ambulancia, Incendios
+from .models import Servicio, Varios, Ambulancia, Incendios, Categorias_emergencias
 from django.contrib.staticfiles import finders
 from django.contrib.auth.decorators import login_required
 
@@ -117,13 +117,8 @@ def editar_servicio_incendios(request, servicio_id, incendio_id):
 # Vista para listar todas las categorías
 def listar_categorias(request):
     categorias = Categorias_emergencias.objects.all()
-    return render(request, 'listar.html', {'categorias': categorias})
-
-# agregar categorias
-# Vista para listar todas las categorías
-def categorias_list_view(request):
-    categorias = Categorias_emergencias.get.all()
     return render(request, 'listar_categorias.html', {'categorias': categorias})
+
 
 
 
