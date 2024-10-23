@@ -58,6 +58,18 @@ def edit_profile(request):
 
     return render(request, 'edit_profile.html', {'form': form})
 
+def edit_profile_enterno(request):
+    profile = get_object_or_404(Profile, user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirige a una página de perfil o cualquier página que prefieras
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'edit_profile_externo.html', {'form': form})
 
 
 

@@ -35,6 +35,31 @@
           >
             <i class="bi bi-eye"></i> Ver Detalles
           </button>
+          <!-- Botón para Editar -->
+          <a
+            href="{% url 'editar_servicio_incendios' incendios.servicio.id incendios.id %}"
+            class="btn btn-primary btn-sm"
+          >
+            <i class="bi bi-pencil-square"></i>
+          </a>
+
+          <!-- Formulario para Eliminar -->
+          <!-- Formulario para Eliminar cada herramienta -->
+          <form
+            action="{% url 'eliminar_servicio_incendios' incendios.id %}"
+            method="post"
+            style="display: inline"
+            id="deleteForm-{{ incendios.id }}"
+          >
+            {% csrf_token %}
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              onclick="confirmDelete('{{ incendios.id }}')"
+            >
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </form>
         </td>
       </tr>
 

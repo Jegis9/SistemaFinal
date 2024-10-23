@@ -46,6 +46,30 @@
           >
             <i class="bi bi-eye"></i> Ver Detalles
           </button>
+          <a
+            href="{% url 'editar_servicio_varios' varios.servicio.id varios.id %}"
+            class="btn btn-primary btn-sm"
+          >
+            <i class="bi bi-pencil-square"></i>
+          </a>
+
+          <!-- Formulario para Eliminar -->
+          <!-- Formulario para Eliminar cada herramienta -->
+          <form
+            action="{% url 'eliminar_servicio_varios' varios.id %}"
+            method="post"
+            style="display: inline"
+            id="deleteForm-{{ varios.id }}"
+          >
+            {% csrf_token %}
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              onclick="confirmDelete('{{ varios.id }}')"
+            >
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </form>
         </td>
       </tr>
 

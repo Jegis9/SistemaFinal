@@ -19,7 +19,99 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 
+# servcios varios acciones
+def eliminar_servicio_vario(request, servicio_id):
+    servicio_vario = get_object_or_404(Varios, id=servicio_id)
+    if request.method == 'POST':
+        servicio_vario.delete()
+        return redirect('varios') 
+    return render(request, 'varios.html')
 
+@login_required
+def editar_servicio_vario(request, servicio_id, vario_id):
+    servicio = get_object_or_404(Servicio, id=servicio_id)
+    vario = get_object_or_404(Varios, id=vario_id)
+
+    if request.method == 'POST':
+        servicio_form = ServicioForm(request.POST, instance=servicio)
+        vario_form = IncendiosForm(request.POST, instance=vario)
+
+        if servicio_form.is_valid() and vario_form.is_valid():
+            servicio_form.save()
+            vario_form.save()
+            messages.success(request, 'Servicios varios editados correctamente.')
+            return redirect('incendios')  # Asegúrate de que esta es la URL correcta
+    else:
+        servicio_form = ServicioForm(instance=servicio)
+        vario_form = VariosForm(instance=vario)
+
+    return render(request, 'editar_varios.html', {
+        'servicio_form': servicio_form,
+        'vario_form': vario_form
+    })
+    
+    # servicio ambulancia acciones
+def eliminar_servicio_ambulancia(request, servicio_id):
+    servicio_ambulancia = get_object_or_404(Ambulancia, id=servicio_id)
+    if request.method == 'POST':
+        servicio_ambulancia.delete()
+        return redirect('ambulancia') 
+    return render(request, 'ambulancia.html')
+
+@login_required
+def editar_servicio_ambulancia(request, servicio_id, ambulancia_id):
+    servicio = get_object_or_404(Servicio, id=servicio_id)
+    ambulancia = get_object_or_404(Ambulancia, id=ambulancia_id)
+
+    if request.method == 'POST':
+        servicio_form = ServicioForm(request.POST, instance=servicio)
+        ambulancia_form = AmbulanciaForm(request.POST, instance=ambulancia)
+
+        if servicio_form.is_valid() and ambulancia_form.is_valid():
+            servicio_form.save()
+            ambulancia_form.save()
+            messages.success(request, 'Servicio y incendios editados correctamente.')
+            return redirect('incendios')  # Asegúrate de que esta es la URL correcta
+    else:
+        servicio_form = ServicioForm(instance=servicio)
+        ambulancia_form = AmbulanciaForm(instance=ambulancia)
+
+    return render(request, 'editar_ambulancia.html', {
+        'servicio_form': servicio_form,
+        'ambulancia_form': ambulancia_form
+    })
+    
+#    servicios incendios acciones
+def eliminar_servicio_incendios(request, servicio_id):
+    servicio_incendios = get_object_or_404(Incendios, id=servicio_id)
+    if request.method == 'POST':
+        servicio_incendios.delete()
+        return redirect('incendios') 
+    return render(request, 'incendios.html')
+
+@login_required
+def editar_servicio_incendios(request, servicio_id, incendio_id):
+    servicio = get_object_or_404(Servicio, id=servicio_id)
+    incendio = get_object_or_404(Incendios, id=incendio_id)
+
+    if request.method == 'POST':
+        servicio_form = ServicioForm(request.POST, instance=servicio)
+        incendio_form = IncendiosForm(request.POST, instance=incendio)
+
+        if servicio_form.is_valid() and incendio_form.is_valid():
+            servicio_form.save()
+            incendio_form.save()
+            messages.success(request, 'Servicio de incendio editados correctamente.')
+            return redirect('incendios')  # Asegúrate de que esta es la URL correcta
+    else:
+        servicio_form = ServicioForm(instance=servicio)
+        incendio_form = IncendiosForm(instance=incendio)
+
+    return render(request, 'editar_incendio.html', {
+        'servicio_form': servicio_form,
+        'incendio_form': incendio_form
+    }) 
+    
 def is_admin_or_staff(user):
     return user.is_authenticated and user.groups.filter(name__in=['Administrador', 'Personal']).exists()
 

@@ -32,6 +32,31 @@
           >
             <i class="bi bi-eye"></i> Ver Detalles
           </button>
+          <!-- Botón para Editar -->
+          <a
+            href="{% url 'editar_servicio_ambulancia' ambulancias.servicio.id ambulancias.id %}"
+            class="btn btn-primary btn-sm"
+          >
+            <i class="bi bi-pencil-square"></i>
+          </a>
+
+          <!-- Formulario para Eliminar -->
+          <!-- Formulario para Eliminar cada herramienta -->
+          <form
+            action="{% url 'eliminar_servicio_ambulancia' ambulancias.id %}"
+            method="post"
+            style="display: inline"
+            id="deleteForm-{{ ambulancias.id }}"
+          >
+            {% csrf_token %}
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              onclick="confirmDelete('{{ ambulancias.id }}')"
+            >
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </form>
         </td>
       </tr>
 

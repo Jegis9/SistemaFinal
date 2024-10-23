@@ -18,6 +18,8 @@ urlpatterns = [
     path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
     path('error', views.error, name='error'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('edit_profile_enterno/', views.edit_profile_enterno, name='edit_profile_enterno'),
+    
 ]
 
 

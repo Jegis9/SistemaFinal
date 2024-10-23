@@ -1,0 +1,18 @@
+{% extends 'basePublico.html' %} {% load static %} {% block content%}
+
+<a href="{% url 'perfil' %}" class="btn btn-primary">Volver</a>
+
+<div class="row justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 form-container">
+      <h1 class="text-center">Editar Perfil</h1>
+      <form method="post">
+        {% csrf_token %} {{ form|crispy }}
+        <button type="submit" class="bg-success text-light w-100">
+          Guardar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
