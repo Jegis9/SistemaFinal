@@ -378,4 +378,24 @@
     </tbody>
   </table>
 </div>
+<script>
+  function confirmDelete(codigo_her) {
+    // Usamos SweetAlert para mostrar una alerta personalizada
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminarlo",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, enviamos el formulario específico por su ID
+        document.getElementById(`deleteForm-${codigo_her}`).submit();
+      }
+    });
+  }
+</script>
 {% endblock %}

@@ -171,3 +171,7 @@ class IncendiosForm(forms.ModelForm):
             'fecha'
         ]
         
+class CategoriasEmergenciasForm(forms.ModelForm):
+    class Meta:
+        model = Categorias_emergencias
+        fields = ['id', 'nombre']

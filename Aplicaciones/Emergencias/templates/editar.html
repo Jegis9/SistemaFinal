@@ -1,0 +1,11 @@
+{% extends "baseG.html" %} {% load static %} {% load crispy_forms_tags %}
+{%block body %}
+
+<h1>Editar Categoría de Emergencia: {{ categoria.nombre }}</h1>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Actualizar</button>
+</form>
+<a href="{% url 'listar_categorias' %}">Volver al listado</a>
+
+{% endblock %}

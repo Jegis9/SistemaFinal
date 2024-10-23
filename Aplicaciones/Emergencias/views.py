@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import ServicioForm, VariosForm, AmbulanciaForm, IncendiosForm
+from .forms import ServicioForm, VariosForm, AmbulanciaForm, IncendiosForm,CategoriasEmergenciasForm
 from .models import Servicio
 from django.urls import reverse
 from django.http import HttpResponse
@@ -40,7 +40,7 @@ def editar_servicio_vario(request, servicio_id, vario_id):
             servicio_form.save()
             vario_form.save()
             messages.success(request, 'Servicios varios editados correctamente.')
-            return redirect('incendios')  # Asegúrate de que esta es la URL correcta
+            return redirect('varios')  # Asegúrate de que esta es la URL correcta
     else:
         servicio_form = ServicioForm(instance=servicio)
         vario_form = VariosForm(instance=vario)
@@ -71,7 +71,7 @@ def editar_servicio_ambulancia(request, servicio_id, ambulancia_id):
             servicio_form.save()
             ambulancia_form.save()
             messages.success(request, 'Servicio y incendios editados correctamente.')
-            return redirect('incendios')  # Asegúrate de que esta es la URL correcta
+            return redirect('ambulancia')  # Asegúrate de que esta es la URL correcta
     else:
         servicio_form = ServicioForm(instance=servicio)
         ambulancia_form = AmbulanciaForm(instance=ambulancia)
@@ -111,6 +111,37 @@ def editar_servicio_incendios(request, servicio_id, incendio_id):
         'servicio_form': servicio_form,
         'incendio_form': incendio_form
     }) 
+    
+    
+# agregar categorias
+# Vista para listar todas las categorías
+def listar_categorias(request):
+    categorias = Categorias_emergencias.objects.all()
+    return render(request, 'categorias_emergencias/listar.html', {'categorias': categorias})
+
+# Vista para crear una nueva categoría
+def crear_categoria(request):
+    if request.method == 'POST':
+        form = CategoriasEmergenciasForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_categorias')
+    else:
+        form = CategoriasEmergenciasForm()
+    return render(request, 'categorias_emergencias/crear.html', {'form': form})
+
+# Vista para editar una categoría existente
+def editar_categoria(request, id):
+    categoria = get_object_or_404(Categorias_emergencias, id=id)
+    if request.method == 'POST':
+        form = CategoriasEmergenciasForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_categorias')
+    else:
+        form = CategoriasEmergenciasForm(instance=categoria)
+    return render(request, 'categorias_emergencias/editar.html', {'form': form, 'categoria': categoria})
+
     
 def is_admin_or_staff(user):
     return user.is_authenticated and user.groups.filter(name__in=['Administrador', 'Personal']).exists()
