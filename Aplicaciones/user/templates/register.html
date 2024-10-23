@@ -344,7 +344,7 @@
     }
 
     // Validar que el DPI tenga 13 dígitos numéricos
-    if (dpi.length > 11 || isNaN(dpi)) {
+    if (dpi.length !==13 || isNaN(dpi)) {
       showError("El DPI debe tener 13 dígitos numéricos.");
       return false;
     }

@@ -44,10 +44,10 @@
           <tr>
             <th class="header-cell">#</th>
             <th class="header-cell w-5">Nombre de usuario</th>
-            <th class="header-cell w-5 border">1er Nombre</th>
-            <th class="header-cell w-5 border">2do Nombre</th>
-            <th class="header-cell w-5 border">1er Apellido</th>
-            <th class="header-cell w-5 border">2do Apellido</th>
+            <th class="header-cell w-5 border">Nombres</th>
+            <th class="header-cell w-5 border">Apellidos</th>
+            <th class="header-cell w-5 border">DPI</th>
+            <th class="header-cell w-5 border">Fecha de nacimiento</th>
 
             <th class="header-cell w-5 border">Opciones</th>
           </tr>
@@ -57,15 +57,29 @@
           <tr>
             <td class="border border-success">{{ user.id }}</td>
             <td class="border border-success">{{ user.username }}</td>
-            <td class="border border-success">{{ user.profile.name1 }}</td>
-            <td class="border border-success">{{ user.profile.name2}}</td>
-            <td class="border border-success">{{ user.profile.lastname1 }}</td>
-            <td class="border border-success">{{ user.profile.lastname2 }}</td>
+            <td class="border border-success">
+              {{ user.profile.name1 }}{{ user.profile.name2}}
+            </td>
+            <td class="border border-success">
+              {{ user.profile.lastname1 }}{{ user.profile.lastname2 }}
+            </td>
+            <td class="border border-success">{{ user.profile.pdi }}</td>
+            <td class="border border-success">{{ user.profile.birthday }}</td>
+
 
             <td class="border border-success">
               <div
                 class="d-flex flex-column flex-md-row justify-content-between"
               >
+                              <!-- Botón para abrir el modal -->
+                              <button
+                              class="btn btn-warning"
+                              type="button"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalAmbulancia{{ user.id }}"
+                            >
+                              <i class="bi bi-eye"></i> 
+                            </button>
                 {% if user.is_active %}
                 <form
                   method="post"
@@ -90,6 +104,161 @@
               </div>
             </td>
           </tr>
+                    <!-- Modal para cada servicio de Ambulancias -->
+                    <div
+                    class="modal fade"
+                    id="modalAmbulancia{{ user.id }}"
+                    tabindex="-1"
+                    aria-labelledby="modalAmbulanciaLabel{{ user.id }}"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header bg-warning">
+                          <h5
+                            class="modal-title"
+                            id="modalAmbulanciaLabel{{ user.id }}"
+                          >
+                            Detalles de usuario
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <div class="row">
+                              <!-- Información General -->
+                              <div class="col-md-6">
+                                <h6>Información General</h6>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Codigo de usuario:</strong></label
+                                  >
+        
+                                  <label for="">{{ user.id }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Ultimo ingreso al sistema:</strong></label
+                                  >
+                                  <label for="">{{ user.last_login }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Nombre de usuario:</strong></label
+                                  >
+                                  <label for="">{{ user.username }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Dia de creacion de usuario:</strong></label
+                                  >
+                                  <label for="">{{ user.date_joined }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Correo electronico:</strong></label
+                                  >
+                                  <label for="">{{ user.email }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Nombres:</strong></label
+                                  >
+                                  <label for="">
+                                    {{ user.profile.name1}}{{user.profile.name2}}</label
+                                  >
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Apellidos:</strong></label
+                                  >
+                                  <label for="">
+                                    {{ user.profile.lastname1}}
+                                    {{user.profile.lastname2}}</label
+                                  >
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Numero de DPI:</strong></label
+                                  >
+                                  <label for="">{{ user.profile.pdi }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Fecha de cumpleaños:</strong></label
+                                  >
+                                  <label for="">{{ user.profile.birthday }}</label>
+                                </div>
+                              </div>
+                              <!-- Información Específica de Ambulancia -->
+                              <div class="col-md-6">
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Telefono:</strong></label
+                                  >
+                                  <label for="">{{ user.profile.phone }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Municipio:</strong></label
+                                  >
+                                  <label for="">{{ user.profile.municipio }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"
+                                    ><strong>Dirección de usuario:</strong></label
+                                  >
+                                  <label for="">{{ user.profile.direccion }}</label>
+                                </div>
+                                {% if user.cv %}
+                                <div class="mb-3">
+                                  <label class="form-label"><strong>Cargo:</strong></label>
+                                  <label>{{ user.cv.cargo }}</label>
+                                </div>
+                              
+                                <div class="mb-3">
+                                  <label class="form-label"><strong>Sobre el:</strong></label>
+                                  <label>{{ user.cv.sobre_mi }}</label>
+                                </div>
+        
+                                <div class="mb-3">
+                                  <label class="form-label"><strong>Tipo sangre:</strong></label>
+                                  <label>{{ user.cv.tipo_sangre }}</label>
+                                </div>
+        
+                                <div class="mb-3">
+                                  <label class="form-label"><strong>Telefono de emergencia:</strong></label>
+                                  <label>{{ user.cv.contacto_telefono_emergencia }}</label>
+                                </div>
+        
+                                <div class="mb-3">
+                                  <label class="form-label"><strong>Correo electronico de contacto:</strong></label>
+                                  <label>{{ user.cv.contacto_email }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"><strong>Habilidades:</strong></label>
+                                  <label>{{ user.cv.habilidades }}</label>
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label"><strong>Estado:</strong></label>
+                                  <label>{{ user.cv.estado }}</label>
+                                </div>
+                              {% else %}
+                                <p>Este usuario no tiene información de CV disponible.</p>
+                              {% endif %}
+                              
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
           {% endfor %}
         </tbody>
       </table>

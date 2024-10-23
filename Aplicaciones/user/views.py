@@ -98,7 +98,7 @@ def register(request):
                 profile.save()
 
                 messages.success(request, 'Nuevo usuario agregado correctamente')
-                return redirect('lInternos')
+                return redirect('login')
             except Exception as e:
                 messages.error(request, f'Error al crear el usuario: {str(e)}')
                 print(f"Error detallado: {str(e)}")
