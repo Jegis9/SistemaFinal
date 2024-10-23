@@ -117,7 +117,7 @@ def editar_servicio_incendios(request, servicio_id, incendio_id):
 # Vista para listar todas las categorías
 def listar_categorias(request):
     categorias = Categorias_emergencias.objects.all()
-    return render(request, 'categorias_emergencias/listar.html', {'categorias': categorias})
+    return render(request, 'listar.html', {'categorias': categorias})
 
 # Vista para crear una nueva categoría
 def crear_categoria(request):
@@ -128,7 +128,7 @@ def crear_categoria(request):
             return redirect('listar_categorias')
     else:
         form = CategoriasEmergenciasForm()
-    return render(request, 'categorias_emergencias/crear.html', {'form': form})
+    return render(request, 'crear.html', {'form': form})
 
 # Vista para editar una categoría existente
 def editar_categoria(request, id):
@@ -140,7 +140,7 @@ def editar_categoria(request, id):
             return redirect('listar_categorias')
     else:
         form = CategoriasEmergenciasForm(instance=categoria)
-    return render(request, 'categorias_emergencias/editar.html', {'form': form, 'categoria': categoria})
+    return render(request, 'editar.html', {'form': form, 'categoria': categoria})
 
     
 def is_admin_or_staff(user):
