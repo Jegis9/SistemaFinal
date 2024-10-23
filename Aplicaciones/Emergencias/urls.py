@@ -21,6 +21,6 @@ urlpatterns = [
     path('eliminar_servicio_incendios/<int:servicio_id>/', views.eliminar_servicio_incendios, name='eliminar_servicio_incendios'),
     path('editar_servicio_incendios/<int:servicio_id>/<int:incendio_id>/', views.editar_servicio_incendios, name='editar_servicio_incendios'),
     path('categorias/', views.listar_categorias, name='listar_categorias'),
-    path('categorias/crear/', views.crear_categoria, name='crear_categoria'),
-    path('categorias/editar/<str:id>/', views.editar_categoria, name='editar_categoria'),
+    path('crear/', views.crear_categoria, name='crear_categoria'),
+    path('editar/<int:id>/', views.editar_categoria, name='editar_categoria'),
 ]
