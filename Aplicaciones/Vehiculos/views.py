@@ -60,29 +60,8 @@ def mantenimientoVehiculos(request, vehiculo_id):
         descripcion = request.POST.get('descripcion')
 
         Mantenimiento.objects.create(vehiculo=vehiculo, estado=estado, descripcion=descripcion)
-        # Preparar los datos para enviar por correo
-        nombre_persona = request.user.profile.name1 or request.user.username
-        nombre_vehiculo = vehiculo.nombre  # Nombre del vehículo
-        fecha_reportado = timezone.now()
 
-        # Crear el mensaje del correo
-        mensaje_correo = (
-            f"Nuevo Reporte de Mantenimiento de Vehículo\n\n"
-            f"Persona: {nombre_persona}\n"
-            f"Vehículo: {nombre_vehiculo}\n"
-            f"Estado: {'Operativo' if estado else 'Fuera de servicio'}\n"
-            f"Descripción: {descripcion}\n"
-            f"Fecha Reportado: {fecha_reportado}\n"
-        )
 
-        # Enviar el correo
-        send_mail(
-            subject='Nuevo Reporte de Mantenimiento de Vehículo',
-            message=mensaje_correo,
-                from_email='bomberosmunicipalestotonicapan@gmail.com',  # Cambia por el correo al que quieres enviar
-                recipient_list=['forniteb6@gmail.com'],
-            fail_silently=False,
-        )
         
         messages.success(request, "El vehículo ha sido reportado.")
         return redirect('vehiculos')
