@@ -61,7 +61,7 @@ def mantenimientoVehiculos(request, vehiculo_id):
 
         Mantenimiento.objects.create(vehiculo=vehiculo, estado=estado, descripcion=descripcion)
         # Preparar los datos para enviar por correo
-        nombre_persona = request.user.get_full_name() or request.user.username
+        nombre_persona = request.user.profile.name1 or request.user.username
         nombre_vehiculo = vehiculo.nombre  # Nombre del vehículo
         fecha_reportado = timezone.now()
 
