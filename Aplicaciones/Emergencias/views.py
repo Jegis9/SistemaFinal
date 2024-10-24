@@ -19,6 +19,17 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 
+
+def prueba_catr(request):
+    # Agrega un print para debug
+    print("Vista listar_categorias ejecutándose")
+    categorias = Categorias_emergencias.objects.all()
+    # Agrega otro print para ver si hay categorías
+    print(f"Categorías encontradas: {categorias.count()}")
+    return render(request, 'prueba_catr.html', {'categorias': categorias})
+
+
+
 # servcios varios acciones
 def eliminar_servicio_vario(request, servicio_id):
     servicio_vario = get_object_or_404(Varios, id=servicio_id)

@@ -1,0 +1,15 @@
+{% extends "baseG.html" %} {% load static %} {% block body %}
+<div class="container mt-5">
+  <h2>Lista de Categorías</h2>
+  {% if categorias %} {% for categoria in categorias %}
+  <div class="card mb-2">
+    <div class="card-body">
+      <h5 class="card-title">ID: {{ categoria.id }}</h5>
+      <p class="card-text">Nombre: {{ categoria.nombre }}</p>
+    </div>
+  </div>
+  {% endfor %} {% else %}
+  <p>No hay categorías disponibles.</p>
+  {% endif %}
+</div>
+{% endblock %}
