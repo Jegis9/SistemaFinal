@@ -135,22 +135,11 @@ def crear_categoria(request):
         form = CategoriasEmergenciasForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('listar_categorias')
+            return redirect('prueba_catr')
     else:
         form = CategoriasEmergenciasForm()
     return render(request, 'crear.html', {'form': form})
 
-# Vista para editar una categoría existente
-def editar_categoria(request, id):
-    categoria = get_object_or_404(Categorias_emergencias, id=id)
-    if request.method == 'POST':
-        form = CategoriasEmergenciasForm(request.POST, instance=categoria)
-        if form.is_valid():
-            form.save()
-            return redirect('listar_categorias')
-    else:
-        form = CategoriasEmergenciasForm(instance=categoria)
-    return render(request, 'editar.html', {'form': form, 'categoria': categoria})
 
     
 def is_admin_or_staff(user):
