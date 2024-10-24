@@ -24,8 +24,8 @@ def lUsuarios(request):
     users = User.objects.filter(profile__is_internal=False)
     return render(request, 'listaUsuarios.html', {"object_list": users})
 
-# @login_required
-# @user_passes_test(is_admin, login_url='error')
+@login_required
+@user_passes_test(is_admin, login_url='error')
 def lInternos(request):
     # Obtenemos la lista de todos los usuarios registrados
   

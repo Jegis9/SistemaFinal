@@ -99,6 +99,15 @@ def estadoHerramienta(request, herramienta_id):
                 descripcion=descripcion,
                 estado=estado
             )
+                    # Enviar correo con la información del estado de la herramienta
+            send_mail(
+                subject='Actualización del estado de herramienta',
+                message=f'El estado de la herramienta {herramienta.nombre} ha sido actualizado. Descripción: {descripcion}. Estado: {estado}.',
+                from_email='bomberosmunicipalestotonicapan@gmail.com',  # Asegúrate de que coincida con tu configuración
+                recipient_list=['forniteb6@gmail.com'],  # Reemplaza con la dirección de correo del destinatario
+                fail_silently=False,
+            )
+
 
         return redirect('lEHerramientas')
     else:

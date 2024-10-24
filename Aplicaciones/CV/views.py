@@ -268,7 +268,7 @@ def generar_cv_reportlab_individual(request):
 
 
 @login_required
-@user_passes_test(is_admin, login_url='error')
+@user_passes_test(is_admin_or_staff, login_url='error')
 def generar_cv_reportlab_platypus(request, user_id):
     # Obtener el usuario específico que es interno
     user_profile = get_object_or_404(User, id=user_id, profile__is_internal=True)
