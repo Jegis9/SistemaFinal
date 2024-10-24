@@ -124,11 +124,6 @@ def editar_servicio_incendios(request, servicio_id, incendio_id):
     }) 
     
     
-# agregar categorias
-# Vista para listar todas las categorías
-def listar_categorias(request):
-    categorias = Categorias_emergencias.objects.all()
-    return render(request, 'listar_categorias.html', {'categorias': categorias})
 
 
 
