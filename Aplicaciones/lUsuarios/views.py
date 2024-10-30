@@ -6,7 +6,11 @@ from django.contrib import messages
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
-
+# views.py
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
 from Aplicaciones.user.models import Profile
 
 # Funciones auxiliares para verificar permisos
@@ -31,11 +35,7 @@ def lInternos(request):
   
     users = User.objects.filter(profile__is_internal=True)
     return render(request, 'listaInternos.html', {"object_list": users})
-# views.py
-from django.contrib.auth.models import User
-from django.shortcuts import redirect, get_object_or_404
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
+
 
 
 @login_required
@@ -43,12 +43,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 def desactivar_usuario(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    if user.is_active:
-        user.is_active = False
-        user.save()
-        messages.success(request, f'Usuario {user.username} desactivado exitosamente.')
-    else:
-        messages.warning(request, f'El usuario {user.username} ya está desactivado.')
+    user.delete()
+    messages.success(request, f'Usuario {user.username} eliminado exitosamente.')
     return redirect('lInternos')  # Reemplaza con el nombre de tu URL
 
 @login_required
@@ -56,14 +52,9 @@ def desactivar_usuario(request, user_id):
 
 def desactivar_usuario_publico(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    if user.is_active and user.profile.is_internal == False:
-        user.is_active = False
-        user.save()
-        messages.success(request, f'Usuario {user.username} desactivado exitosamente.')
-    else:
-        messages.warning(request, f'El usuario {user.username} ya está desactivado.')
-    return redirect('lUsuarios')  # Reemplaza con el nombre de tu URL
-
+    user.delete()
+    messages.success(request, f'Usuario {user.username} eliminado exitosamente.')
+    return redirect('lInternos')  # Reemplaza con el nombre de tu URL
 
 @login_required
 @user_passes_test(is_admin, login_url='error')
