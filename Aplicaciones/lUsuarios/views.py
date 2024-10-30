@@ -43,8 +43,17 @@ def lInternos(request):
 
 def desactivar_usuario(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    user.delete()
-    messages.success(request, f'Usuario {user.username} eliminado exitosamente.')
+    if user.is_active:
+        # Desactivar usuario
+        user.is_active = False
+        user.save()
+        messages.success(request, f'Usuario {user.username} desactivado exitosamente.')
+    
+    # Después de desactivar, eliminar el usuario si ya está inactivo
+    if not user.is_active:
+        user.delete()
+        messages.success(request, f'Usuario {user.username} eliminado exitosamente.')
+    
     return redirect('lInternos')  # Reemplaza con el nombre de tu URL
 
 @login_required
@@ -52,9 +61,14 @@ def desactivar_usuario(request, user_id):
 
 def desactivar_usuario_publico(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    user.delete()
-    messages.success(request, f'Usuario {user.username} eliminado exitosamente.')
-    return redirect('lInternos')  # Reemplaza con el nombre de tu URL
+    if user.is_active and user.profile.is_internal == False:
+        user.is_active = False
+        user.save()
+        messages.success(request, f'Usuario {user.username} desactivado exitosamente.')
+    else:
+        messages.warning(request, f'El usuario {user.username} ya está desactivado.')
+    return redirect('lUsuarios')  # Reemplaza con el nombre de tu URL
+
 
 @login_required
 @user_passes_test(is_admin, login_url='error')
