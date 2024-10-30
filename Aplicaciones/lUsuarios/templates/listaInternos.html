@@ -80,14 +80,39 @@
                             >
                               <i class="bi bi-eye"></i> 
                             </button>
-                            {% if user.is_active %}
-                            <form method="post" action="{% url 'desactivar_usuario' user.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Desactivar</button>
-                            </form>
-                  
-                        {% endif %}
-                        
+
+
+                            
+                <button
+                type="button"
+                class="eliminar-btn btn btn-danger mb-2 mb-md-0"
+                data-url="{% url 'eliminar_persona' user.id %}"
+              >
+                <i class="bi bi-trash-fill"></i>
+              </button>
+
+
+                {% if user.is_active %}
+                <form
+                  method="post"
+                  action="{% url 'desactivar_usuario' user.id %}"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">
+                    Desactivar
+                  </button>
+                </form>
+                {% else %}
+                <span class="text-muted">Desactivado</span>
+                {% endif %} {% if not user.is_active %}
+                <form
+                  method="post"
+                  action="{% url 'activar_usuario' user.id %}"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success">Activar</button>
+                </form>
+                {% endif %}
               </div>
             </td>
           </tr>
