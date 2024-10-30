@@ -51,14 +51,6 @@ def desactivar_usuario(request, user_id):
         messages.warning(request, f'El usuario {user.username} ya está desactivado.')
     return redirect('lInternos')  # Reemplaza con el nombre de tu URL
 
-
-def eliminar_persona(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    user.delete()
-    messages.success(request, f'Usuario {user.username} eliminado exitosamente.')
-    return redirect('lInternos')  # Reemplaza con el nombre de tu URL
-
-
 @login_required
 @user_passes_test(is_admin, login_url='error')
 
